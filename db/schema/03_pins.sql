@@ -1,7 +1,7 @@
 -- Drop and recreate Pins table (Example)
 
-DROP TABLE IF EXISTS maps CASCADE;
-CREATE TABLE maps (
+DROP TABLE IF EXISTS pins CASCADE;
+CREATE TABLE pins (
   id SERIAL PRIMARY KEY NOT NULL,
   map_id INT REFERENCES users(id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
