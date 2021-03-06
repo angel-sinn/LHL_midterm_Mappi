@@ -21,5 +21,9 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.get('/hello', (req,res) =>{
+    res.render("index");
+  })
   return router;
 };
