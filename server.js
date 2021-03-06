@@ -31,6 +31,18 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
+
+app.get("/", (req, res) => {
+  const templateVars = {
+    API_KEY: process.env.API_KEY,
+  }
+  res.render("index", templateVars);
+});
+
+
+
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
@@ -51,10 +63,8 @@ app.use("/api/maps", mapsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 // Serve Static files from public
-app.use(express.static(path.join(__dirname, '../public')));
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
