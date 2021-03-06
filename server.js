@@ -1,5 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
+const path = require('path');
+
 
 // Web server config
 const PORT       = process.env.PORT || 8080;
@@ -46,9 +48,11 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  res.render("index");
-});
+// Serve Static files from public
+app.use(express.static(path.join(__dirname, '../public')));
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
