@@ -15,5 +15,11 @@ module.exports = (db) => {
       }
       res.render("index", templateVars);
   });
+
+  router.get("/:id", (req,res) => {
+    //return data about single map
+  });
+
+
   return router;
 };
