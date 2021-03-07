@@ -57,6 +57,7 @@ app.get("/", (req, res) => {
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const mapsRoutes = require("./routes/maps");
+const mapsRoutes = require("./routes/pins");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
