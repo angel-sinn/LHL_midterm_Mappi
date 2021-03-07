@@ -7,7 +7,9 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM pins;`)
+    let query = "SELECT * FROM pins;";
+    console.log(query);
+    db.query(query)
       .then(data => {
         const pins = data.rows;
         res.json({ pins });
@@ -18,10 +20,10 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  router.get('/', (req, res) => {
-    const templateVars = pins.coords; //example code
-    res.render("pins", templateVars); //separate render for pins OR index w/ pins details
-  });
+  // router.get('/', (req, res) => {
+  //   const templateVars = pins.coords; //example code
+  //   res.render("pins", templateVars); //separate render for pins OR index w/ pins details
+  // });
   return router;
 };
 
