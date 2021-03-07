@@ -5,8 +5,24 @@ const router  = express.Router();
 
 // GETs below
 
-router.get('/pins', (req, res) => {
-  res.render("maps/pins") //route TBD
-})
+module.exports = (db) => {
+  router.get("/", (req, res) => {
+    db.query(`SELECT * FROM pins;`)
+      .then(data => {
+        const pins = data.rows;
+        res.json({ pins });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+  router.get('/', (req, res) => {
+    const templateVars = pins.coords; //example code
+    res.render("pins", templateVars); //separate render for pins OR index w/ pins details
+  });
+  return router;
+};
 
 // POSTs below
