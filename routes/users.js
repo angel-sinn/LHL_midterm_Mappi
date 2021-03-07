@@ -22,7 +22,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get('/hello', (req,res) =>{
+  router.get('/', (req,res) =>{
     res.render("index");
   })
   return router;

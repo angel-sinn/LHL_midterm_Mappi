@@ -7,6 +7,7 @@ const process = require('process');
 // this will either be used to send and store data about the map..
 // right now I am trying to get the map api without exposing the api keyy
 
+// GETs below
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -23,3 +24,9 @@ module.exports = (db) => {
 
   return router;
 };
+
+// POSTs below
+
+router.post("/:id/post", (req, res) => {
+
+});
