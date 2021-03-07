@@ -32,10 +32,17 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 
-
+// dummy objects
+const userAlice = {
+  name: 'Alice',
+  email: 'allice@mappi.com',
+  password: 'password',
+  image: 'https://imgur.com/r/puppies/QfLwddi',
+}
 
 app.get("/", (req, res) => {
   const templateVars = {
+    user: userAlice,
     API_KEY: process.env.API_KEY,
   }
   res.render("index", templateVars);
