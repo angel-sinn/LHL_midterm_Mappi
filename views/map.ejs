@@ -18,8 +18,39 @@
 
 <body>
   <%- include('partials/_header') %>
-  <div class="create-map-container">
+  <div class="map-container">
     <div id="map"></div>
+
+    <div class="map-info-side">
+
+      <form action="#" class="map-info">
+        <h2>Map Title</h2>
+        <h3>Map Description</h3>
+        <input class="save-map" type="submit" value="Save Mappi">
+      </form>
+
+      <form action="#" class="update-pin">
+        <h2>Edit Mappi Pin</h2>
+        <div class="update-pin-title">
+            <label for="update-pin-title">Pin Title</label><br>
+            <input type="text" id="update-pin-title" name="update-pin-title" required>
+        </div>
+
+        <div class="update-pin-description">
+            <label for="update-pin-description">Pin Description</label><br>
+            <textarea id="update-pin-descprition" name="update-pin-description" required></textarea>
+        </div>
+
+        <div class="update-pin-url">
+            <label for="update-pin-url">Pin URL</label><br>
+            <input type="text" id="update-pin-url" name="update-pin-url" required>
+        </div>
+
+        <input class="update-pin-submit" type="submit" value="Edit Pin">
+    </form>
+    </div>
+
+</div>
   </div>
 
   <script>
