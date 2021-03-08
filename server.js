@@ -65,7 +65,7 @@ const pinsRoutes = require("./routes/pins");
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/maps", mapsRoutes(db));
-app.use("api/pins", pinsRoutes(db));
+app.use("/api/pins", pinsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 

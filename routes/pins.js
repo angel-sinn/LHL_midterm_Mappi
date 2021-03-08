@@ -20,10 +20,10 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  router.get('/', (req, res) => {
-    const templateVars = pins.coords; //example code
-    res.render("pins", templateVars); //separate render for pins OR index w/ pins details
-  });
+  // router.get('/', (req, res) => {
+  //   const templateVars = pins.coords; //example code
+  //   res.render("pins", templateVars); //separate render for pins OR index w/ pins details
+  // });
   return router;
 };
 
