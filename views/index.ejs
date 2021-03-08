@@ -24,22 +24,42 @@
   <script>
     function initMap() {
       // The location of Uluru
+      const myLatlng = { lat: -25.363, lng: 131.044 };
+
       const uluru = { lat: -25.344, lng: 131.036 };
+
       // The map, centered at Uluru
       const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 4,
         center: uluru,
       });
+
       // The marker, positioned at Uluru
       const marker = new google.maps.Marker({
         position: uluru,
         map: map,
       });
+
+      let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: myLatlng,
+      });
+      // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        const latLng = {
+          lat: mapsMouseEvent.latLng.toJSON().lat,
+          lng: mapsMouseEvent.latLng.toJSON().lng
+        }
+        // Set lat long
+        console.log(latLng);
+
+      });
+
     }
   </script>
-
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
     type="text/javascript"></script>
+
 
 </body>
 
