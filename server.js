@@ -44,17 +44,19 @@ const userAlice = {
 app.get("/", (req, res) => {
   const templateVars = {
     user: userAlice,
-    API_KEY: process.env.API_KEY,
+    API_KEY: process.env.API_KEY
   }
   res.render("index", templateVars);
 });
 
 
 
-// app.use(express.static("public"));
+
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
+
+
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const mapsRoutes = require("./routes/maps");
@@ -63,6 +65,8 @@ const favouriteMapsRoutes = require("./routes/favourite_maps");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
+
+
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/maps", mapsRoutes(db));
