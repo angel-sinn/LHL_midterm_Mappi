@@ -1,25 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Dashboard</title>
 
-<head>
-  <title>Dashboard</title>
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
-
-</head>
-
-<body>
-  <h1>Welcome back, (USER)!</h1>
-
-  <h2>My Maps</h2>
-  <h2>My Favourited Maps</h2>
-  <h2>Contributed Maps</h2>
-
-</body>
-
+  <body>
+    <%- include('partials/_header') %>
+    <div class="profile">
+      <div class="user-profile-box">
+        <img
+          src="https://i.imgur.com/QfLwddi.jpg"
+          class="user-profile-picture"
+          alt="user-profile-picture"
+        />
+        <h2 class="user-name">Alice</h2>
+      </div>
+      <div class="user-maps">
+        <section class="user-favourite-maps">
+          <h2>Favourited Mappi</h2>
+          <div class="favourite-maps-grid">
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+          </div>
+        </section>
+        <section class="user-my-maps">
+          <h2>My Mappi</h2>
+          <div class="my-maps-grid">
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+          </div>
+        </section>
+        <section class="user-contributed-maps">
+          <h2>Contributed Mappi</h2>
+          <div class="contributed-maps-grid">
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+            <div class="box"><img src="" alt="" /></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
 </html>
