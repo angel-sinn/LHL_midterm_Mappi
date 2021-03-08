@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+  <div class="create-map-container">
+    <div id="map"></div>
+  </div>
+
+  <script>
+    // This id will have to be stored in the database
+    let markerId = 0;
+    const uniqueId = function() {
+        return ++markerId;
+    }
+
+    // The markers object is exposed to the console
+    // In the browser type "markers" and hit enter to see all the markers
+    // To get a position of a single marker (ex. id=1) type the following
+    // markers[1].position.lat()
+    // or
+    // markers[1].position.lng()
+    let markers = {};
+
+    const editMarker = function(id) {
+      console.log('Editing marker ', id);
+    };
+
+    const addlistener = function(id) {
+      console.log('adding listener to id', id);
+      document.getElementById(`deletebtn${id}`).addEventListener('click', ()=>{
+        console.log(id);
+      })
+    }
+
+    const createMarker = function(map, position) {
+      const id = uniqueId(); // get new id
+      const marker = new google.maps.Marker({ // create a marker and set id
+          id: id,
+          position: position,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP
+      });
+
+
+      const contentString = `
+      <div class="infowindow">
+        <div>My id is ${marker.id}</div>
+        <img style= "width: 100px; height: 100px;" src="https://i.imgur.com/uVU4ffo.jpg">
+        <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
+        <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
+      </div>
+      `;
+
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+
+
+      // add click listener
+      marker.addListener("click", () => {
+        infowindow.open(map, marker);
+        // deleteMarker(marker.id);
+      })
+
+      markers[id] = marker; // cache created marker to markers object with id as its key
+      return marker;
+    }
+
+
+    const deleteMarker = function(id) {
+        const marker = markers[id]; // find the marker by given id
+        marker.setMap(null);
+        delete markers[id];
+    }
+
+
+
+    function initMap() {
+      // The location of Uluru
+      const myLatlng = { lat: -25.363, lng: 131.044 };
+
+      const uluru = { lat: -25.344, lng: 131.036 };
+
+      // The map, centered at Uluru
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 4,
+        center: uluru,
+      });
+
+      let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: myLatlng,
+      });
+      // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        const latLng = {
+          lat: mapsMouseEvent.latLng.toJSON().lat,
+          lng: mapsMouseEvent.latLng.toJSON().lng
+        }
+        // Set lat long
+        // const marker = new google.maps.Marker({
+        //   position: latLng,
+        //   map: map
+        // });
+        const marker = createMarker(map, latLng);
+
+        // let test = document.getElementById(`deletebtn${marker.id}`)
+        // .addEventListener("click", () => {
+        //   console.log('heelo');
+        //   deleteMarker(marker.id);
+        // });
+      });
+    };
+  </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
+    type="text/javascript"></script>
+
+
+</body>
+
+</html>
