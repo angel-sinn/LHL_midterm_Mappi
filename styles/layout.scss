@@ -19,7 +19,7 @@ $black: #000;
   justify-content: space-between;
   align-items: center;
   z-index: 10;
-  height: 8vh;
+  height: 60px;
 
   &-logo {
     font-family: Varela Round, sans-serif;
@@ -45,11 +45,74 @@ $black: #000;
 }
 
 // Create mappi
+
+%textbox-format {
+  width: 100%;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  padding: 5px;
+  margin-top: 5px;
+}
+
 .create-map-container {
-  height: 92vh;
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+form.create-new-map {
+  height: 450px;
+  width: 30%;
+  margin: 40px;
+  padding: 25px;
+  border-radius: 12px;
+  font-family: Varela Round, sans-serif;
+  box-shadow: 0, 0, 1rem, rgb(0, 0, 0 /15%);
+  background-color: $formblue;
+  color: $grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#new-map-title {
+  @extend %textbox-format;
+  height: 2rem;
+}
+
+#new-map-description {
+  @extend %textbox-format;
+  height: 4rem;
+  word-wrap: break-word;
+}
+
+#new-map-category {
+  @extend %textbox-format;
+}
+
+input.new-map-submit {
+  height: 35px;
+  width: 100px;
+  padding: 5px;
+  background-color: $white;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  color: $grey;
+  align-self: center;
+}
+
+// View mappi
+.map-container {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 div#map {
@@ -62,22 +125,44 @@ div#map {
   background-color: $black;
 }
 
-form.create-new-map {
-  height: 40vh;
+// Map info and option to edit mappi
+.map-info-side {
+  height: 70vh;
   width: 30%;
   margin: 30px 30px 30px 0;
-  padding: 10px;
-  border-radius: 12px;
-  font-family: Varela Round, sans-serif;
-  box-shadow: 0, 0, 1rem, rgb(0, 0, 0 /15%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// Displays mappi info
+form.map-info {
+  height: 200px;
   background-color: $formblue;
   color: $grey;
+  font-family: Varela Round, sans-serif;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding: 10px;
+  margin-bottom: 30px;
 }
 
-input.new-map-submit {
+// Displays edit mappi form
+form.update-pin {
+  height: 350px;
+  background-color: $formblue;
+  color: $grey;
+  font-family: Varela Round, sans-serif;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+%update-buttons {
   height: 35px;
   width: 120px;
   padding: 5px;
@@ -88,6 +173,14 @@ input.new-map-submit {
   font-size: 1rem;
   color: $grey;
   align-self: flex-end;
+}
+
+input.save-map {
+  @extend %update-buttons;
+}
+
+input.update-pin-submit {
+  @extend %update-buttons;
 }
 
 // User profile box
