@@ -28,6 +28,12 @@
         return ++markerId;
     }
 
+    // The markers object is exposed to the console
+    // In the browser type "markers" and hit enter to see all the markers
+    // To get a position of a single marker (ex. id=1) type the following
+    // markers[1].position.lat()
+    // or
+    // markers[1].position.lng()
     let markers = {};
     const createMarker = function(map, position) {
         const id = uniqueId(); // get new id
@@ -45,6 +51,7 @@
         markers[id] = marker; // cache created marker to markers object with id as its key
         return marker;
     }
+
 
     const deleteMarker = function(id) {
         const marker = markers[id]; // find the marker by given id
