@@ -35,21 +35,51 @@
     // or
     // markers[1].position.lng()
     let markers = {};
+
+    const editMarker = function(id) {
+      console.log('Editing marker ', id);
+    };
+
+    const addlistener = function(id) {
+      console.log('adding listener to id', id);
+      document.getElementById(`deletebtn${id}`).addEventListener('click', ()=>{
+        console.log(id);
+      })
+    }
+
     const createMarker = function(map, position) {
-        const id = uniqueId(); // get new id
-        const marker = new google.maps.Marker({ // create a marker and set id
-            id: id,
-            position: position,
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP
-        });
-        // add click listener
-        marker.addListener("click", () => {
-          deleteMarker(marker.id);
-        })
-        markers[id] = marker; // cache created marker to markers object with id as its key
-        return marker;
+      const id = uniqueId(); // get new id
+      const marker = new google.maps.Marker({ // create a marker and set id
+          id: id,
+          position: position,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP
+      });
+
+
+      const contentString = `
+      <div class="infowindow">
+        <div>My id is ${marker.id}</div>
+        <img style= "width: 100px; height: 100px;" src="https://i.imgur.com/uVU4ffo.jpg">
+        <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
+        <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
+      </div>
+      `;
+
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+
+
+      // add click listener
+      marker.addListener("click", () => {
+        infowindow.open(map, marker);
+        // deleteMarker(marker.id);
+      })
+
+      markers[id] = marker; // cache created marker to markers object with id as its key
+      return marker;
     }
 
 
@@ -58,6 +88,8 @@
         marker.setMap(null);
         delete markers[id];
     }
+
+
 
     function initMap() {
       // The location of Uluru
@@ -86,11 +118,15 @@
         //   position: latLng,
         //   map: map
         // });
-        createMarker(map, latLng);
+        const marker = createMarker(map, latLng);
 
+        // let test = document.getElementById(`deletebtn${marker.id}`)
+        // .addEventListener("click", () => {
+        //   console.log('heelo');
+        //   deleteMarker(marker.id);
+        // });
       });
-
-    }
+    };
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
     type="text/javascript"></script>
