@@ -20,7 +20,24 @@ module.exports = (db) => {
   router.get("/:id", (req,res) => {
     //return data about single map
   });
-
+  router.post('/', (req,res) => {
+      // make query
+      let query = 'SELECT * FROM maps';
+      db.query(query).then(response => {
+        console.log('in router');
+        const userAlice = {
+          name: 'Alice',
+          email: 'allice@mappi.com',
+          password: 'password',
+          image: 'https://imgur.com/r/puppies/QfLwddi',
+        }
+        const templateVars = {
+          user: userAlice,
+          API_KEY: process.env.API_KEY
+        }
+        res.render("map", templateVars);
+      });
+  });
 
   return router;
 };
