@@ -20,31 +20,6 @@
   <%- include('partials/_header') %>
   <div class="create-map-container">
     <div id="map"></div>
-    <form action="/api/maps" method="POST" class="create-new-map">
-      <h2>Create Mappi</h2>
-      <div class="new-map-title">
-        <label for="new-map-title">Map Title</label><br>
-        <input type="text" id="new-map-title" name="new-map-title" required>
-      </div>
-
-      <div class="new-map-description">
-        <label for="new-map-description">Map Description</label><br>
-        <textarea id="new-map-descprition" name="new-map-description" required></textarea>
-      </div>
-
-      <div class="new-map-category">
-        <label>Map Category</label><br>
-        <select id = "new-map-category">
-          <option></option>
-          <option value = "cat-restaurant">Restaurants</option>
-          <option value = "cat-cafe">Cafes</option>
-          <option value = "cat-bar">Bars</option>
-          <option value = "cat-parks">Parks</option>
-        </select>
-      </div>
-
-      <input class="new-map-submit" type="submit" value="Create">
-    </form>
   </div>
 
   <script>
