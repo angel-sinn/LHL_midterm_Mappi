@@ -1,8 +1,198 @@
-body {
-  background-color: #EEE;
+* {
+  margin: 0;
 }
 
-body h1 {
-  color: #244751;
+.navbar {
+  background-color: #88c7ec;
+  padding: 10px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 10;
+  height: 8vh;
+}
+
+.navbar-logo {
+  font-family: Varela Round, sans-serif;
+  font-size: 2rem;
+  color: #FFF;
+  text-decoration: none;
+}
+
+.navbar-menu {
+  width: 210px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar-options {
+  font-family: Varela Round, sans-serif;
+  text-decoration: none;
+  color: #FFF;
+  border: solid 1px #FFF;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+.create-map-container {
+  height: 92vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+div#map {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 30px;
+  height: 80vh;
+  width: 65%;
+  border-radius: 12px;
+  background-color: #000;
+}
+
+form.create-new-map {
+  height: 40vh;
+  width: 30%;
+  margin: 30px 30px 30px 0;
+  padding: 10px;
+  border-radius: 12px;
+  font-family: Varela Round, sans-serif;
+  -webkit-box-shadow: 0, 0, 1rem, black;
+          box-shadow: 0, 0, 1rem, black;
+  background-color: #cee3f2;
+  color: #848C91;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+input.new-map-submit {
+  height: 35px;
+  width: 120px;
+  padding: 5px;
+  background-color: #FFF;
+  border: 1px solid #848C91;
+  border-radius: 5px;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  color: #848C91;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 30px;
+}
+
+.user-profile-box {
+  height: 300px;
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+img.user-profile-picture {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
+
+.user-name {
+  font-family: Varela Round, sans-serif;
+  font-size: 1.75rem;
+  color: #848C91;
+}
+
+.user-maps {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 75%;
+  font-family: Varela Round, sans-serif;
+  padding: 0 30px;
+}
+
+.user-maps h2 {
+  text-align: center;
+  padding-bottom: 20px;
+  color: #848C91;
+  font-family: Varela Round, sans-serif;
+  font-size: 1.75rem;
+}
+
+.favourite-maps-grid, .my-maps-grid, .contributed-maps-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  grid-gap: 1rem;
+}
+
+.box {
+  background: #FFF;
+  border: dashed 2px #88c7ec;
+  border-radius: 5px;
+  height: 80px;
+  width: 120px;
+}
+
+.user-favourite-maps, .user-my-maps, .user-contributed-maps {
+  margin: 20px 0;
 }
 /*# sourceMappingURL=layout.css.map */

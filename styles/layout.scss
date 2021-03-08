@@ -1,20 +1,19 @@
 // See: https://sass-lang.com/
+
+// Colors
+$white: #FFF;
+$navblue: #88c7ec;
+$formblue: #cee3f2;
+$grey: #848C91;
+$black: #000;
+
 * {
   margin: 0;
 }
 
-body {
-  background-color: #ebeef0
-
-  h1 {
-    color: #244751;
-  }
-}
-
 // Nav bar
-
 .navbar {
-  background-color: #88c7ec;
+  background-color: $navblue;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
@@ -25,7 +24,7 @@ body {
   &-logo {
     font-family: Varela Round, sans-serif;
     font-size: 2rem;
-    color: #FFF;
+    color: $white;
     text-decoration: none;
   }
 
@@ -38,20 +37,14 @@ body {
   &-options {
     font-family: Varela Round, sans-serif;
     text-decoration: none;
-    color: #FFF;
-    border: solid 1px #FFF;
+    color: $white;
+    border: solid 1px $white;
     border-radius: 5px;
     padding: 7px;
-  }
-
-  &-logged-in {
-    display:flex
-
-  }
+    }
 }
 
-// create a map page
-
+// Create mappi
 .create-map-container {
   height: 92vh;
   width: 100%;
@@ -64,20 +57,21 @@ div#map {
   flex-direction: column;
   margin: 30px;
   height: 80vh;
-  width: 75%;
+  width: 65%;
   border-radius: 12px;
+  background-color: $black;
 }
 
 form.create-new-map {
   height: 40vh;
-  width: 25%;
+  width: 30%;
   margin: 30px 30px 30px 0;
   padding: 10px;
   border-radius: 12px;
   font-family: Varela Round, sans-serif;
   box-shadow: 0, 0, 1rem, rgb(0, 0, 0 /15%);
-  background-color: #cee3f2;
-  color: #848c91;
+  background-color: $formblue;
+  color: $grey;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -85,14 +79,87 @@ form.create-new-map {
 
 input.new-map-submit {
   height: 35px;
-  width: 100px;
+  width: 120px;
   padding: 5px;
-  background-color: #FFF;
-  border: 1px solid #848c91;
+  background-color: $white;
+  border: 1px solid $grey;
   border-radius: 5px;
   font-family: Varela Round, sans-serif;
   font-size: 1rem;
-  color: #848c91;
+  color: $grey;
   align-self: flex-end;
 }
 
+// User profile box
+.profile {
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
+}
+
+.user-profile-box {
+  height: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+img.user-profile-picture {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
+
+.user-name {
+  font-family: Varela Round, sans-serif;
+  font-size: 1.75rem;
+  color: $grey;
+}
+
+// Map dashboard
+.user-maps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 75%;
+  font-family: Varela Round, sans-serif;
+  padding: 0 30px;
+
+  h2 {
+    text-align: center;
+    padding-bottom: 20px;
+    color: $grey;
+    font-family: Varela Round, sans-serif;
+    font-size: 1.75rem;
+  }
+}
+
+// Favourite maps, my maps, contributed maps
+%grid-display {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 1rem;
+}
+
+%box-display {
+  background: $white;
+  border: dashed 2px $navblue;
+  border-radius: 5px;
+  height: 80px;
+  width: 120px;
+}
+
+.user-favourite-maps, .user-my-maps, .user-contributed-maps {
+  margin: 20px 0;
+}
+
+.favourite-maps-grid, .my-maps-grid, .contributed-maps-grid {
+  @extend %grid-display;
+}
+
+.box {
+  @extend %box-display;
+}
