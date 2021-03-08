@@ -25,7 +25,30 @@ module.exports = (db) => {
   return router;
 };
 
-// POSTs below
+// // POSTs below
+// router.get('/', (req,res) => {
+//   // get all maps
+// });
+// router.get('/:id', (req,res) => {
+//   // get single map
+//   // get pins with map
+// });
+// router.post('/:id', (req,res) => {
+//   // update single map details (title, type, etc.)
+// });
+// router.post('/:id/put', (req,res) => {
+//   // update single map details (title, type, etc.)
+// });
+// router.post('/',(req,res) => {
+//   // Create new map
+// });
+// router.post('/:id/delete',(req,res) => {
+//   // delete map :id
+// });
+
+
+
+
 
 router.post("/:id/post", (req, res) => {
 
