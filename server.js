@@ -59,7 +59,6 @@ app.get("/", (req, res) => {
 
 
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const mapsRoutes = require("./routes/maps");
 const pinsRoutes = require("./routes/pins");
 const favouriteMapsRoutes = require("./routes/favourite_maps");
@@ -69,7 +68,6 @@ const favouriteMapsRoutes = require("./routes/favourite_maps");
 
 
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/maps", mapsRoutes(db));
 app.use("/api/pins", pinsRoutes(db));
 app.use("/api/favourite_maps", favouriteMapsRoutes(db));
