@@ -271,28 +271,8 @@ img.user-profile-picture {
 }
 
 // Favourite maps, my maps, contributed maps
-%grid-display {
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 1rem;
-}
-
-%box-display {
-  background: $white;
-  border: dashed 2px $navblue;
-  border-radius: 5px;
-  height: 80px;
-  width: 120px;
-}
 
 .user-favourite-maps, .user-my-maps, .user-contributed-maps {
   margin: 20px 0;
 }
 
-.favourite-maps-grid, .my-maps-grid, .contributed-maps-grid {
-  @extend %grid-display;
-}
-
-.box {
-  @extend %box-display;
-}
