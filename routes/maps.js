@@ -22,7 +22,7 @@ module.exports = (db) => {
     let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
     return db.query(query, [req.params.id])
       .then(res => {
-        console.log(res.rows); // hangs due to lack of data use
+        console.log(res.rows[0].id); // hangs due to lack of data use
       })
       .catch(err => console.log(err.stack));
   });
@@ -68,18 +68,25 @@ module.exports = (db) => {
     return db.query(query, [req.params.id])
       .then(res => {
         console.log(res.rows); // hangs due to lack of data use
-        // getPins(res.rows.map_id); // filler function to fetch pins depending on map_id
+        // getPins(res.rows.map_id); // filler function to fetch pins depending on map_id ~ or just fetch pins from req? Je ne comprends pas mon ami
       })
       .catch(err => console.log(err.stack));
   });
+
+  // WIP ~ my brain hurts ~ reference addProperty function for modularity or hardcode this
+  router.put('/:id/put', (req, res) => {
+    let query =`
+    DELETE FROM maps WHERE id = $1;
+    INSERT INTO maps (title, description, category, lat, lng, zoom)
+    VALUES
+    `;
+    return
+  })
 
   return router;
 };
 
 
-// router.post('/:id', (req,res) => {
-//   // update single map details (title, type, etc.)
-// });
 // router.post('/:id/put', (req,res) => {
 //   // update single map details (title, type, etc.)
 // });
