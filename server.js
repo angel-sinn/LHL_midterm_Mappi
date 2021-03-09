@@ -67,10 +67,10 @@ const favouriteMapsRoutes = require("./routes/favourite_maps");
 // Note: Feel free to replace the example routes below with your own
 
 
-app.use("/api/users", usersRoutes(db));
-app.use("/api/maps", mapsRoutes(db));
-app.use("/api/pins", pinsRoutes(db));
-app.use("/api/favourite_maps", favouriteMapsRoutes(db));
+app.use("/users", usersRoutes(db));
+app.use("/maps", mapsRoutes(db));
+app.use("/pins", pinsRoutes(db));
+app.use("/favourite_maps", favouriteMapsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 
