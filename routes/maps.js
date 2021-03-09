@@ -3,6 +3,7 @@ const router  = express.Router();
 const request = require('request');
 const process = require('process');
 const { getPackedSettings } = require('http2');
+// const { getPins } = require('../public/scripts/app');
 
 
 // this will either be used to send and store data about the map..
@@ -24,6 +25,7 @@ module.exports = (db) => {
       .then(res => {
         console.log(res.rows[0]); // hangs due to lack of data use
         // returns anon. map data object
+        // should also return map_id pins
       })
       .catch(err => console.log(err.stack));
   });
@@ -62,6 +64,7 @@ module.exports = (db) => {
     db.query(query)
       .then(response => {
         res.end(console.log(response.rows)); // post that returns all map data in array
+        // should insert maps data into maps
       });
   });
 
