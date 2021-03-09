@@ -73,14 +73,19 @@ module.exports = (db) => {
       .catch(err => console.log(err.stack));
   });
 
-  // WIP ~ my brain hurts ~ reference addProperty function for modularity or hardcode this
+  // DELETE FROM maps WHERE id = $1; ~ this needs to go into helper function or run as separate query before PUT
+  // WIP ~ my brain hurts ~ probably need to change lat, lng, zoom reqs
   router.put('/:id/put', (req, res) => {
     let query =`
-    DELETE FROM maps WHERE id = $1;
     INSERT INTO maps (id, title, description, category, lat, lng, zoom)
     VALUES ($1, ${req.body.title}, ${req.body.description}, ${req.body.category}, ${req.body.lat}, ${req.body.lng}, ${req.body.zoom});
     `;
-    return
+    console.log(query);
+    return db.query(query, [req.params.id])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err.stack));
   })
 
   return router;
