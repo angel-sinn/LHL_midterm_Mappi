@@ -77,8 +77,8 @@ module.exports = (db) => {
   router.put('/:id/put', (req, res) => {
     let query =`
     DELETE FROM maps WHERE id = $1;
-    INSERT INTO maps (title, description, category, lat, lng, zoom)
-    VALUES
+    INSERT INTO maps (id, title, description, category, lat, lng, zoom)
+    VALUES ($1, ${req.body.title}, ${req.body.description}, ${req.body.category}, ${req.body.lat}, ${req.body.lng}, ${req.body.zoom});
     `;
     return
   })
