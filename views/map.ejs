@@ -45,9 +45,8 @@
             <label for="update-pin-url">Pin URL</label><br>
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
-        <div class="update-pin-submit" id="update-pin-button"></div>
-        <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
       </form>
+      <div class="update-pin-submit" id="update-pin-button"></div>
     </div>
 
 </div>
@@ -72,10 +71,49 @@
     // markers[1].position.lng()
     let markers = {};
 
+    function imageExists(url, callback) {
+      var img = new Image();
+      img.onload = function() { callback(true); };
+      img.onerror = function() { callback(false); };
+      img.src = url;
+    }
+
+    const updatePinInfo = function(id) {
+      let imageTag ='';
+      imageExists(markers[id].image_url, (exists) => {
+        if  (exists) {
+          imageTag = `<img src="${markers[id].image_url}">`
+        } else {
+          imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
+        }
+        console.log(infowindow.content);
+        const contentString = `
+        <div class="infowindow" id="infowindow">
+            <h1>${markers[id].title}</h1>
+            ${imageTag}
+            <p>${markers[id].description}</p>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+        </div>
+        `;
+        markers[id].infoWindowContent = contentString;
+
+        // document.getElementById('infowindow').innerHTML = contentString;
+        infowindow.setContent(contentString)
+        // infowindow = new google.maps.InfoWindow({
+        //   content: contentString,
+        // });
+        console.log(id);
+      })
+    };
+
     const savePin = function(id) {
-      markers[id].title = '';
-      markers[id].description = '',
-      markers[id].image_url = ''
+      markers[id].title = document.getElementById('update-pin-title').value;
+      markers[id].description = document.getElementById('update-pin-descprition').value;
+      markers[id].image_url = document.getElementById('update-pin-url').value;
+      updatePinInfo(id);
+      document.getElementById('update-pin-title').value = '';
+      document.getElementById('update-pin-descprition').value = '';
+      document.getElementById('update-pin-url').value = '';
     };
 
 
@@ -86,9 +124,6 @@
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
-      document.querySelector('#update-pin-submit').addEventListener('click',(value)=>{
-        console.log("current id", selectedMarkerId);
-      })
     };
 
     const addlistener = function(id) {
@@ -110,11 +145,15 @@
           draggable: true,
           animation: google.maps.Animation.DROP,
           address: 'address',
-          map_id: mapId
+          map_id: mapId,
+          infoWindowContent:`
+            <div class="infowindow" id="infowindow">
+              <h1>My id is ${id}</h1>
+              <img src="https://i.imgur.com/uVU4ffo.jpg">
+              <p>This is my long long long very very very very long description</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+            </div>`
       });
-
-
-
 
 
       // add click listener
@@ -123,17 +162,8 @@
           infowindow.close();
         }
 
-        const contentString = `
-        <div class="infowindow">
-          <h1>My id is ${marker.id}</h1>
-          <img src="https://i.imgur.com/uVU4ffo.jpg">
-          <p>This is my long long long very very very very long description</p>
-          <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
-        </div>
-        `;
-
       infowindow = new google.maps.InfoWindow({
-        content: contentString,
+        content: marker.infoWindowContent,
       });
         selectedMarkerId = marker.id;
         infowindow.open(map, marker);
@@ -177,10 +207,6 @@
         center: uluru,
       });
 
-      let infoWindow = new google.maps.InfoWindow({
-        content: "Click the map to get Lat/Lng!",
-        position: myLatlng,
-      });
       // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
         const latLng = {
