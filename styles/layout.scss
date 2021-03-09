@@ -129,7 +129,7 @@ div#map {
 
 .infowindow {
 
-  height: 180px;
+  height: 200px;
   width: 160px;
   word-wrap: break-word;
 
@@ -190,7 +190,7 @@ form.map-info {
 
 // Displays edit mappi form
 form.update-pin {
-  height: 350px;
+  height: 375px;
   background-color: $formblue;
   color: $grey;
   font-family: Varela Round, sans-serif;
@@ -199,6 +199,7 @@ form.update-pin {
   flex-direction: column;
   justify-content: space-around;
   padding: 10px;
+  display: none;
 }
 
 %update-buttons {
