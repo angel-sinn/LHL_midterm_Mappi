@@ -69,7 +69,10 @@
     let markers = {};
 
     const editMarker = function(id) {
-      console.log('Editing marker ', id);
+      // console.log('Editing marker ', id);
+      let form = document.querySelector("form.update-pin");
+      form.style.display = 'flex';
+      document.querySelector("input#update-pin-title").focus();
     };
 
     const addlistener = function(id) {
