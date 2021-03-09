@@ -2,12 +2,11 @@ const express = require('express');
 const router  = express.Router();
 const request = require('request');
 const process = require('process');
+const { getPackedSettings } = require('http2');
 
 
 // this will either be used to send and store data about the map..
 // right now I am trying to get the map api without exposing the api keyy
-
-// GETs below
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -17,12 +16,21 @@ module.exports = (db) => {
       res.render("index", templateVars);
   });
 
-  router.get("/:id", (req,res) => {
-    //return data about single map
+  // GETs below
+
+   router.get('/:id', (req, res) => {
+    let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
+    return db.query(query, [req.params.id])
+      .then(res => {
+        console.log(res.rows); // hangs due to lack of data use
+      })
+      .catch(err => console.log(err.stack));
   });
+
+  // POSTs below
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
-      let query = 'SELECT * FROM maps';
+      let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
       console.log(req.body);
       db.query(query).then(response => {
         console.log('in router');
@@ -47,17 +55,28 @@ module.exports = (db) => {
       });
   });
 
+  router.post('/', (req, res) => {
+    let query = `SELECT * FROM maps;`
+    db.query(query)
+      .then(response => {
+        res.end(console.log(response.rows)); // post that returns all map data in array
+      });
+  });
+
+  router.post('/:id', (req, res) => {
+    let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
+    return db.query(query, [req.params.id])
+      .then(res => {
+        console.log(res.rows); // hangs due to lack of data use
+        // getPins(res.rows.map_id); // filler function to fetch pins depending on map_id
+      })
+      .catch(err => console.log(err.stack));
+  });
+
   return router;
 };
 
-// // POSTs below
-// router.get('/', (req,res) => {
-//   // get all maps
-// });
-// router.get('/:id', (req,res) => {
-//   // get single map
-//   // get pins with map
-// });
+
 // router.post('/:id', (req,res) => {
 //   // update single map details (title, type, etc.)
 // });
