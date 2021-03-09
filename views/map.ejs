@@ -23,13 +23,17 @@
 
     <div class="map-info-side">
 
+<<<<<<< HEAD
       <form action="/maps/save" type="POST" class="map-info">
+=======
+      <form action="" class="map-info">
+>>>>>>> ee33bd92d3a6fb2ac3c02ffad278c2ec6efeed87
         <h2>Title: <%= mapData.title %></h2>
         <h3>Description: <%= mapData.description %></h3>
-        <input class="save-map" type="submit" value="Save Mappi">
+        <input class="save-map" id="save-map" type="submit" value="Save Mappi">
       </form>
 
-      <form action="#" class="update-pin">
+      <form class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
         <div class="update-pin-title">
             <label for="update-pin-title">Pin Title</label><br>
@@ -46,8 +50,8 @@
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
 
-        <input class="update-pin-submit" type="submit" value="Edit Pin">
-    </form>
+        <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
+      </form>
     </div>
 
 </div>
@@ -56,6 +60,7 @@
   <script>
     // This id will have to be stored in the database
     let markerId = 0;
+    const mapId = <%= mapData.id %>;
     const uniqueId = function() {
         return ++markerId;
     }
@@ -74,6 +79,11 @@
       document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
+
+      document.querySelector('#update-pin-submit').addEventListener('click',(value)=>{
+        console.log("current id", id);
+        console.log(markers[id]);
+      });
     };
 
     const addlistener = function(id) {
@@ -86,12 +96,16 @@
     const createMarker = function(map, position) {
       const id = uniqueId(); // get new id
       const marker = new google.maps.Marker({ // create a marker and set id
-          id: id,
-          // title: //get from dom
+          id: id, // this should auto increment, but for local use we manually
+          title:'',
+          description:'',
+          image_url:'',
           position: position,
           map: map,
           draggable: true,
-          animation: google.maps.Animation.DROP
+          animation: google.maps.Animation.DROP,
+          address: 'address',
+          map_id: mapId
       });
 
 
@@ -115,9 +129,12 @@
         infowindow.open(map, marker);
       })
 
+
       markers[id] = marker; // cache created marker to markers object with id as its key
       return marker;
     }
+
+
 
 
     const deleteMarker = function(id) {
@@ -164,6 +181,10 @@
 
       });
     };
+
+
+
+
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
     type="text/javascript"></script>

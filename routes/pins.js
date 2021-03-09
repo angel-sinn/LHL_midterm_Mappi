@@ -20,8 +20,13 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  // router.get('/', (req, res) => {
-  //   const templateVars = pins.coords; //example code
+
+  router.post("/", (req,res)=>{
+
+    console.log(req.body);
+  });
+  // router.get('/:id', (req, res) => { // id is map_id
+  //   const templateVars = pins; //example code
   //   res.render("pins", templateVars); //separate render for pins OR index w/ pins details
   // });
   return router;
