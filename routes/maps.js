@@ -22,12 +22,14 @@ module.exports = (db) => {
     let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
     return db.query(query, [req.params.id])
       .then(res => {
-        console.log(res.rows[0].id); // hangs due to lack of data use
+        console.log(res.rows[0]); // hangs due to lack of data use
+        // returns anon. map data object
       })
       .catch(err => console.log(err.stack));
   });
 
   // POSTs below
+
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
       let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
@@ -64,22 +66,40 @@ module.exports = (db) => {
   });
 
   router.post('/:id', (req, res) => {
-    let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
+    let query = `SELECT maps.* FROM maps WHERE id = $1;`;
     return db.query(query, [req.params.id])
       .then(res => {
         console.log(res.rows); // hangs due to lack of data use
-        // getPins(res.rows.map_id); // filler function to fetch pins depending on map_id ~ or just fetch pins from req? Je ne comprends pas mon ami
+        /*SELECT pins.*
+          FROM maps
+          JOIN pins ON maps(id) = map_id
+          WHERE maps.id = $1;*/ // this will be an AJAX request...
       })
       .catch(err => console.log(err.stack));
   });
 
-  // DELETE FROM maps WHERE id = $1; ~ this needs to go into helper function or run as separate query before PUT
-  // WIP ~ my brain hurts ~ probably need to change lat, lng, zoom reqs
+  // WIP ~ probably need to change lat, lng, zoom reqs
   router.put('/:id/put', (req, res) => {
     let query =`
-    INSERT INTO maps (id, title, description, category, lat, lng, zoom)
-    VALUES ($1, ${req.body.title}, ${req.body.description}, ${req.body.category}, ${req.body.lat}, ${req.body.lng}, ${req.body.zoom});
+    UPDATE maps
+      SET title = ${req.body.title},
+          description = ${req.body.description},
+          category = ${req.body.category},
+          lat = ${req.body.lat},
+          lng = ${req.body.lng},
+          zoom = ${req.body.zoom}
+      WHERE id = $1;
     `;
+    console.log(query);
+    return db.query(query, [req.params.id])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err.stack));
+  })
+
+  router.delete('/:id/delete', (req, res) => {
+    let query =`DELETE FROM maps WHERE id = $1`;
     console.log(query);
     return db.query(query, [req.params.id])
     .then(res => {
@@ -90,22 +110,3 @@ module.exports = (db) => {
 
   return router;
 };
-
-
-// router.post('/:id/put', (req,res) => {
-//   // update single map details (title, type, etc.)
-// });
-// router.post('/',(req,res) => {
-//   // Create new map
-// });
-// router.post('/:id/delete',(req,res) => {
-//   // delete map :id
-// });
-
-
-
-
-
-router.post("/:id/post", (req, res) => {
-
-});
