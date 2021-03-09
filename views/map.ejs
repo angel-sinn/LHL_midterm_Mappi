@@ -45,7 +45,7 @@
             <label for="update-pin-url">Pin URL</label><br>
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
-
+        <div class="update-pin-submit" id="update-pin-button"></div>
         <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
       </form>
     </div>
@@ -59,6 +59,7 @@
     let markerId = 0;
     let selectedMarkerId = 0;
     const mapId = <%= mapData.id %>;
+
     const uniqueId = function() {
         return ++markerId;
     }
@@ -71,13 +72,20 @@
     // markers[1].position.lng()
     let markers = {};
 
+    const savePin = function(id) {
+      markers[id].title = '';
+      markers[id].description = '',
+      markers[id].image_url = ''
+    };
+
+
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
       let form = document.querySelector("form.update-pin");
       document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
-
+      document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
       document.querySelector('#update-pin-submit').addEventListener('click',(value)=>{
         console.log("current id", selectedMarkerId);
       })
@@ -120,7 +128,6 @@
           <h1>My id is ${marker.id}</h1>
           <img src="https://i.imgur.com/uVU4ffo.jpg">
           <p>This is my long long long very very very very long description</p>
-          <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
           <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
         </div>
         `;
@@ -130,6 +137,7 @@
       });
         selectedMarkerId = marker.id;
         infowindow.open(map, marker);
+        editMarker(selectedMarkerId);
       });
 
 
