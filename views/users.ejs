@@ -26,18 +26,18 @@
         <h2 class="user-name"><%=user.name%></h2>
       </div>
       <div class="user-maps">
+        <section class="user-my-maps">
+          <h2>My Mappi</h2>
+          <div class="my-maps">
+            <% for (let map in mapData) { %>
+           <a href="/maps/<%= mapData[map].id %>"><div><%= mapData[map].title %></div></a>
+            <% } %>
+            </div>
+        </section>
         <section class="user-favourite-maps">
           <h2>Favourited Mappi</h2>
           <ul class="favourite-maps">
             <li>favourite-maps</li>
-          </ul>
-        </section>
-        <section class="user-my-maps">
-          <h2>My Mappi</h2>
-          <ul class="my-maps">
-            <% for (let title in titles) { %>
-            <li><%= titles[title].title %></li>
-            <% } %>
           </ul>
         </section>
         <section class="user-contributed-maps">
