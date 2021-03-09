@@ -23,6 +23,7 @@ module.exports = (db) => {
   router.post('/', (req,res) => {
       // make query
       let query = 'SELECT * FROM maps';
+      console.log(req.body);
       db.query(query).then(response => {
         console.log('in router');
         const userAlice = {
@@ -33,7 +34,14 @@ module.exports = (db) => {
         }
         const templateVars = {
           user: userAlice,
-          API_KEY: process.env.API_KEY
+          API_KEY: process.env.API_KEY,
+          mapData: {
+            title: req.body['new-map-title'],
+            description: req.body['new-map-description'],
+            location: { lat: -25.344, lng: 131.036 },
+            category: req.body['new-map-category'],
+            zoom: 8
+          }
         }
         res.render("map", templateVars);
       });

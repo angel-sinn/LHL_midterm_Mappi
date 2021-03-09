@@ -24,13 +24,13 @@
     <div class="map-info-side">
 
       <form action="#" class="map-info">
-        <h2>Map Title</h2>
-        <h3>Map Description</h3>
+        <h2>Title: <%= mapData.title %></h2>
+        <h3>Description: <%= mapData.description %></h3>
         <input class="save-map" type="submit" value="Save Mappi">
       </form>
 
       <form action="#" class="update-pin">
-        <h2>Edit Mappi Pin</h2>
+        <h2 id="update-pin-id">Edit Mappi Pin</h2>
         <div class="update-pin-title">
             <label for="update-pin-title">Pin Title</label><br>
             <input type="text" id="update-pin-title" name="update-pin-title" required>
@@ -71,6 +71,7 @@
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
       let form = document.querySelector("form.update-pin");
+      document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
     };
@@ -86,6 +87,7 @@
       const id = uniqueId(); // get new id
       const marker = new google.maps.Marker({ // create a marker and set id
           id: id,
+          // title: //get from dom
           position: position,
           map: map,
           draggable: true,
@@ -111,7 +113,6 @@
       // add click listener
       marker.addListener("click", () => {
         infowindow.open(map, marker);
-        // deleteMarker(marker.id);
       })
 
       markers[id] = marker; // cache created marker to markers object with id as its key
@@ -125,13 +126,22 @@
         delete markers[id];
     }
 
-
+    // ############################ this data will be filled out by ejs ###############################
+    // const mapData = {
+    //   id: //generate
+    //   title: //from form
+    //   category:
+    //   lat:,
+    //   lng:
+    //   zoom:
+    //   description:
+    // }
 
     function initMap() {
       // The location of Uluru
       const myLatlng = { lat: -25.363, lng: 131.044 };
 
-      const uluru = { lat: -25.344, lng: 131.036 };
+      const uluru = { lat: -25.344, lng: 131.036 }; // make api request to user current locaiton?
 
       // The map, centered at Uluru
       const map = new google.maps.Map(document.getElementById("map"), {
@@ -149,18 +159,9 @@
           lat: mapsMouseEvent.latLng.toJSON().lat,
           lng: mapsMouseEvent.latLng.toJSON().lng
         }
-        // Set lat long
-        // const marker = new google.maps.Marker({
-        //   position: latLng,
-        //   map: map
-        // });
+
         const marker = createMarker(map, latLng);
 
-        // let test = document.getElementById(`deletebtn${marker.id}`)
-        // .addEventListener("click", () => {
-        //   console.log('heelo');
-        //   deleteMarker(marker.id);
-        // });
       });
     };
   </script>
