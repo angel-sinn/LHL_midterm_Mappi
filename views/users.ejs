@@ -19,42 +19,32 @@
     <div class="profile">
       <div class="user-profile-box">
         <img
-          src="https://i.imgur.com/QfLwddi.jpg"
+          src= "<%=user.image%>"
           class="user-profile-picture"
           alt="user-profile-picture"
         />
-        <h2 class="user-name">Alice</h2>
+        <h2 class="user-name"><%=user.name%></h2>
       </div>
       <div class="user-maps">
         <section class="user-favourite-maps">
           <h2>Favourited Mappi</h2>
-          <div class="favourite-maps-grid">
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-          </div>
+          <ul class="favourite-maps">
+            <li>favourite-maps</li>
+          </ul>
         </section>
         <section class="user-my-maps">
           <h2>My Mappi</h2>
-          <div class="my-maps-grid">
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-          </div>
+          <ul class="my-maps">
+            <% for (let title in titles) { %>
+            <li><%= titles[title].title %></li>
+            <% } %>
+          </ul>
         </section>
         <section class="user-contributed-maps">
           <h2>Contributed Mappi</h2>
-          <div class="contributed-maps-grid">
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-            <div class="box"><img src="" alt="" /></div>
-          </div>
+          <ul class="contributed-maps">
+            <li>contributed map 1</li>
+          </ul>
         </section>
       </div>
     </div>
