@@ -34,7 +34,7 @@ module.exports = (db) => {
 
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
-      let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
+      let queryString = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
 
       console.log(req.body);
       const userAlice = {
