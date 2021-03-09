@@ -20,7 +20,7 @@ module.exports = (db) => {
   router.get("/:id", (req,res) => {
     //return data about single map
   });
-  router.post('/', (req,res) => {
+  router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
       let query = 'SELECT * FROM maps';
       console.log(req.body);
