@@ -28,8 +28,8 @@ module.exports = (db) => {
     //   const id = map_id;
     //   const pins = pins.data; //no idea what this will actually be
     //   database.savePins({id: id, pins: pins}) //example function "savepins"
-    //     .then(property => {
-    //       res.send(property);
+    //     .then(pins => {
+    //       res.send(pins);
     //     })
     //     .catch(e => {
     //       console.error(e);
