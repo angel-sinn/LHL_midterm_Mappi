@@ -45,12 +45,13 @@ module.exports = (db) => {
       }
       let query = `
       INSERT INTO maps (user_id, title, category, lat, lng, zoom)
-      VALUES (${userAlice.id}, '${mapData.title}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom});
+      VALUES (${userAlice.id}, '${mapData.title}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom})
+      RETURNING *;
       `;
       db.query(query).then(response => {
-        console.log(response);
-      });
-      res.render("map", templateVars);
+        templateVars.mapData['id'] = response.rows[0].id;
+        res.render("map", templateVars);
+      }).catch((e) => console.log(e));
   });
 
   return router;
