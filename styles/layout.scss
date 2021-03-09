@@ -227,16 +227,17 @@ input.update-pin-submit {
 .profile {
   display: flex;
   flex-direction: row;
-  margin: 30px;
+  margin: 20px;
 }
 
 .user-profile-box {
-  height: 300px;
-  width: 300px;
+  height: 275px;
+  width: 275px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 30px;
 }
 
 img.user-profile-picture {
@@ -247,26 +248,27 @@ img.user-profile-picture {
 
 .user-name {
   font-family: Varela Round, sans-serif;
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   color: $grey;
 }
 
 // Map dashboard
 .user-maps {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
-  width: 75%;
+  align-items: flex-start;
+  width: 80%;
   font-family: Varela Round, sans-serif;
   padding: 0 30px;
+  margin-top: 30px;
 
   h2 {
     text-align: center;
-    padding-bottom: 20px;
+    margin-bottom: 40px;
     color: $grey;
     font-family: Varela Round, sans-serif;
-    font-size: 1.75rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -274,5 +276,29 @@ img.user-profile-picture {
 
 .user-favourite-maps, .user-my-maps, .user-contributed-maps {
   margin: 20px 0;
+}
+
+.my-maps {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: $grey;
+  }
+
+  div {
+    height: 2.5rem;
+    width: 225px;
+    word-wrap: break-word;
+    border: dashed 2px $navblue;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+
+  }
 }
 
