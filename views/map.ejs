@@ -116,12 +116,32 @@
       document.getElementById('update-pin-url').value = '';
     };
 
+    const parsePins = function(pins) {
+      newObj = {};
+      for(const pin in pins){
+        newObj[pin] = {
+          map_id: pins[pin].map_id,
+          title: pins[pin].title,
+          description: pins[pin].description,
+          image_url: pins[pin].image_url,
+          lat: pins[pin].position.lat(),
+          lng: pins[pin].position.lng(),
+          address: pins[pin].address
+        }
+      }
+      return newObj;
+    };
+
     const saveMap = function() {
       console.log("map id", mapId);
       console.log("pins", markers);
-      // $.ajax({
-      //   url: ''
-      // })
+      $.ajax({
+        url: '/pins',
+        method: 'POST',
+        data: parsePins(markers),
+      }).done(response => {
+        console.log(response)
+      });
     }
 
 
