@@ -43,12 +43,12 @@ module.exports = (db) => {
   router.post("/", (req,res)=>{
     // get all pins from saveMap in map.ejs
     let temp_query = `
-    INSERT INTO pins (map_id, title, description, image_url, lat, lng, address)
+    INSERT INTO pins (map_id, user_id, title, description, image_url, lat, lng, address)
     VALUES
     `;
 
     for(let id in req.body){
-      temp_query += `(${parseInt(req.body[id].map_id)},'${req.body[id].title}','${req.body[id].description}', '${req.body[id].image_url}', ${Number(req.body[id].lat)},  ${Number(req.body[id].lng)}, '${req.body[id].address}'), `;
+      temp_query += `(${parseInt(req.body[id].map_id)},${parseInt(req.body[id].user_id)},'${req.body[id].title}','${req.body[id].description}', '${req.body[id].image_url}', ${Number(req.body[id].lat)},  ${Number(req.body[id].lng)}, '${req.body[id].address}'), `;
     }
     query = temp_query.slice(0,-2) + ' RETURNING *;'
 
