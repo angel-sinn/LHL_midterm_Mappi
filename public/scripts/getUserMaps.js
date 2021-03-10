@@ -1,7 +1,7 @@
 $(() => {
   $.ajax({
     method: "GET",
-    url: `/users/${currentUser.id}/contributed`
+    url: `/users/${currentUser.id}/contributed_maps`
   }).done((res) => {
     console.log(res);
     for (let map of res) {
