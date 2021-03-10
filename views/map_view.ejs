@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+  <div class="map-container">
+    <div id="map"></div>
+
+    <div class="map-info-side">
+
+      <form action="/maps/save" type="POST" class="map-info">
+        <h2>Title: <%= mapData.title %></h2>
+        <h3>Description: <%= mapData.description %></h3>
+        <input class="save-map" id="save-map" type="submit" value="Save Mappi">
+      </form>
+
+      <form class="update-pin">
+        <h2 id="update-pin-id">Edit Mappi Pin</h2>
+        <div class="update-pin-title">
+            <label for="update-pin-title">Pin Title</label><br>
+            <input type="text" id="update-pin-title" name="update-pin-title" required>
+        </div>
+
+        <div class="update-pin-description">
+            <label for="update-pin-description">Pin Description</label><br>
+            <textarea id="update-pin-descprition" name="update-pin-description" required></textarea>
+        </div>
+
+        <div class="update-pin-url">
+            <label for="update-pin-url">Pin URL</label><br>
+            <input type="text" id="update-pin-url" name="update-pin-url" required>
+        </div>
+
+        <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
+      </form>
+    </div>
+
+</div>
+  </div>
+
+  <script>
+    // This id will have to be stored in the database
+    let markerId = 0;
+    let map;
+    const mapId = <%= mapData.id %>;
+
+    const uniqueId = function() {
+        return ++markerId;
+    }
+
+    // The markers object is exposed to the console
+    // In the browser type "markers" and hit enter to see all the markers
+    // To get a position of a single marker (ex. id=1) type the following
+    // markers[1].position.lat()
+    // or
+    // markers[1].position.lng()
+    let markers = {};
+
+    const editMarker = function(id) {
+      // console.log('Editing marker ', id);
+      let form = document.querySelector("form.update-pin");
+      document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
+      form.style.display = 'flex';
+      document.querySelector("input#update-pin-title").focus();
+
+      document.querySelector('#update-pin-submit').addEventListener('click',(value)=>{
+        console.log("current id", id);
+        console.log(markers[id]);
+      });
+    };
+
+    const addlistener = function(id) {
+      console.log('adding listener to id', id);
+      document.getElementById(`deletebtn${id}`).addEventListener('click', ()=>{
+        console.log(id);
+      })
+    }
+
+    const createMarker = function(map, position) {
+      const id = uniqueId(); // get new id
+      const marker = new google.maps.Marker({ // create a marker and set id
+          id: id, // this should auto increment, but for local use we manually
+          title:'',
+          description:'',
+          image_url:'',
+          position: position,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: 'address',
+          map_id: mapId
+      });
+
+
+      const contentString = `
+      <div class="infowindow">
+        <h1>My id is ${marker.id}</h1>
+        <img src="https://i.imgur.com/uVU4ffo.jpg">
+        <p>This is my long long long very very very very long description</p>
+        <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
+        <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
+      </div>
+      `;
+
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+
+
+      // add click listener
+      marker.addListener("click", () => {
+        infowindow.open(map, marker);
+      })
+
+
+      markers[id] = marker; // cache created marker to markers object with id as its key
+      return marker;
+    }
+
+
+
+
+    const deleteMarker = function(id) {
+        const marker = markers[id]; // find the marker by given id
+        marker.setMap(null);
+        delete markers[id];
+    }
+
+    // ############################ this data will be filled out by ejs ###############################
+    // const mapData = {
+    //   id: //generate
+    //   title: //from form
+    //   category:
+    //   lat:,
+    //   lng:
+    //   zoom:
+    //   description:
+    // }
+
+
+    const addMarkers = function (markers) {
+        for (let marker in markers) {
+          console.log("ml", markers[marker].lat);
+          console.log("m", markers[marker]);
+          const newMarker = new google.maps.Marker({
+          id: uniqueId(),
+          title: markers[marker].title,
+          description: markers[marker].description,
+          image_url:'',
+          position: {lat: Number(markers[marker].lat), lng: Number(markers[marker].lng)},
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: markers[marker].address,
+          map_id: mapId
+          });
+        }
+      }
+    function initMap() {
+      // The location of Uluru
+      const myLatlng = { lat: -25.363, lng: 131.044 };
+
+      const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
+
+      // The map, centered at Uluru
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 4,
+        center: location,
+      });
+
+      let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: myLatlng,
+      });
+      // // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        const latLng = {
+          lat: mapsMouseEvent.latLng.toJSON().lat,
+          lng: mapsMouseEvent.latLng.toJSON().lng
+        }
+
+        const marker = createMarker(map, latLng);
+      });
+
+
+    };
+
+
+
+
+
+  </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
+    type="text/javascript"></script>
+
+
+</body>
+
+</html>

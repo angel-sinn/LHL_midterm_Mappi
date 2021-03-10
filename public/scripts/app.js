@@ -1,15 +1,8 @@
 $(() => {
   $.ajax({
     method: "GET",
-    url: "/pins"
+    url: `/pins/${mapId}`
   }).done((res) => {
-    console.log(res);
+    addMarkers(res);
   })
 });
-
-// wow much amazing AJAX magic below
-
-const getPins = function(map_id) {
-
-}
-exports.getPins = getPins;
