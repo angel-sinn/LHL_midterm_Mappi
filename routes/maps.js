@@ -19,6 +19,39 @@ module.exports = (db) => {
   });
 
   // GETs below
+  router.post('/create', (req,res) => { //change to /create/:id once map data functional
+    // make query
+
+    const userAlice = {
+      id: 1,
+      name: 'Alice',
+      email: 'allice@mappi.com',
+      password: 'password',
+      image: 'https://imgur.com/r/puppies/QfLwddi',
+    }
+    const mapData = {
+      title: req.body['new-map-title'],
+      description: req.body['new-map-description'],
+      location: { lat: -25.344, lng: 131.036 },
+      category: req.body['new-map-category'],
+      zoom: 8
+    }
+    const templateVars = {
+      user: userAlice,
+      API_KEY: process.env.API_KEY,
+      mapData: mapData
+    }
+    let query = `
+    INSERT INTO maps (user_id, title, description, category, lat, lng, zoom)
+    VALUES (${userAlice.id}, '${mapData.title}','${mapData.description}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom})
+    RETURNING *;
+    `;
+    db.query(query).then(response => {
+      templateVars.mapData['id'] = response.rows[0].id;
+      res.render("map", templateVars);
+    }).catch((e) => console.log(e));
+});
+
 
   router.get('/:id', (req, res) => {
     let query = `
@@ -52,39 +85,6 @@ module.exports = (db) => {
 // };
 
   // POSTs below
-
-  router.post('/create', (req,res) => { //change to /create/:id once map data functional
-      // make query
-
-      const userAlice = {
-        id: 1,
-        name: 'Alice',
-        email: 'allice@mappi.com',
-        password: 'password',
-        image: 'https://imgur.com/r/puppies/QfLwddi',
-      }
-      const mapData = {
-        title: req.body['new-map-title'],
-        description: req.body['new-map-description'],
-        location: { lat: -25.344, lng: 131.036 },
-        category: req.body['new-map-category'],
-        zoom: 8
-      }
-      const templateVars = {
-        user: userAlice,
-        API_KEY: process.env.API_KEY,
-        mapData: mapData
-      }
-      let query = `
-      INSERT INTO maps (user_id, title, description, category, lat, lng, zoom)
-      VALUES (${userAlice.id}, '${mapData.title}','${mapData.description}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom})
-      RETURNING *;
-      `;
-      db.query(query).then(response => {
-        templateVars.mapData['id'] = response.rows[0].id;
-        res.render("map", templateVars);
-      }).catch((e) => console.log(e));
-  });
 
   router.post('/', (req, res) => {
     let query = `SELECT * FROM maps;`
