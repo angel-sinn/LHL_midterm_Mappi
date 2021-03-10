@@ -24,6 +24,11 @@ module.exports = (db) => {
 
   router.get('/', (req,res) =>{
     res.render("index");
+  });
+
+  router.get('/:id', (req,res) =>{
+    // return single user
   })
+
   return router;
 };
