@@ -22,16 +22,20 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     let query = `
-    SELECT id, title, lat, lng FROM maps WHERE id = $1
+    SELECT id, title, description, lat, lng FROM maps WHERE id = $1
     `;
-    console.log(query);
+    // console.log(query);
     return db.query(query, [req.params.id])
-      .then(res => {
-        const map = res.rows[0];
-        console.log('map: ', map); // hangs due to lack of data use
-        getPins(map.id);
+      .then(response => {
+        const mapData = response.rows[0];
+        const templateVars = {
+          API_KEY: process.env.API_KEY,
+          mapData
+        }
+        console.log('map: ', mapData); // hangs due to lack of data use
+        getPins(mapData.id);
+        res.render("map_test", templateVars);
       })
-      .catch(err => console.log(err.stack));
   });
 
 // const getPins = function(map_id) {
