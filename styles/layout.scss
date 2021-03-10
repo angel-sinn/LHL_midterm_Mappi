@@ -28,19 +28,14 @@ $black: #000;
     text-decoration: none;
   }
 
-  &-menu {
-    width: 210px;
-    display: flex;
-    justify-content: space-between;
-  }
-
   &-options {
     font-family: Varela Round, sans-serif;
     text-decoration: none;
     color: $white;
     border: solid 1px $white;
     border-radius: 5px;
-    padding: 7px;
+    padding: 8px;
+    margin-left: 10px;
     }
 }
 
