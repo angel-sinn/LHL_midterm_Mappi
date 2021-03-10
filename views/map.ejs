@@ -23,11 +23,7 @@
 
     <div class="map-info-side">
 
-<<<<<<< HEAD
-      <form action="/maps/save" type="POST" class="map-info">
-=======
       <form action="" class="map-info">
->>>>>>> ee33bd92d3a6fb2ac3c02ffad278c2ec6efeed87
         <h2>Title: <%= mapData.title %></h2>
         <h3>Description: <%= mapData.description %></h3>
         <input class="save-map" id="save-map" type="submit" value="Save Mappi">
@@ -110,13 +106,13 @@
 
 
       const contentString = `
-      <div class="infowindow">
-        <h1>My id is ${marker.id}</h1>
-        <img src="https://i.imgur.com/uVU4ffo.jpg">
-        <p>This is my long long long very very very very long description</p>
-        <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
-        <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
-      </div>
+        <div class="infowindow">
+          <h1>My id is ${marker.id}</h1>
+          <img src="https://i.imgur.com/uVU4ffo.jpg">
+          <p>This is my long long long very very very very long description</p>
+          <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
+          <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
+        </div>
       `;
 
       const infowindow = new google.maps.InfoWindow({
