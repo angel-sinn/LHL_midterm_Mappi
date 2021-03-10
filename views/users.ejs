@@ -12,6 +12,8 @@
       href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap"
       rel="stylesheet"
     />
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/getUserMaps.js"></script>
   </head>
 
   <body>
@@ -36,17 +38,22 @@
         </section>
         <section class="user-favourite-maps">
           <h2>Favourited Mappi</h2>
-          <ul class="favourite-maps">
-            <li>favourite-maps</li>
-          </ul>
+          <div id="favourite-maps" class="my-maps">
+
+          </div>
         </section>
         <section class="user-contributed-maps">
           <h2>Contributed Mappi</h2>
-          <ul class="contributed-maps">
-            <li>contributed map 1</li>
-          </ul>
+          <div id="contributed-maps" class="my-maps">
+
+          </div>
         </section>
       </div>
     </div>
   </body>
+
+  <script>
+    const currentUser = {id: <%= user.id %>};
+  </script>
+
 </html>
