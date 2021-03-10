@@ -30,7 +30,7 @@
       <div class="user-maps">
         <section class="user-my-maps">
           <h2>My Mappi</h2>
-          <div class="my-maps">
+          <div id="my-maps" class="map-list">
             <% for (let map in mapData) { %>
            <a href="/maps/<%= mapData[map].id %>"><div><%= mapData[map].title %></div></a>
             <% } %>
@@ -38,14 +38,12 @@
         </section>
         <section class="user-favourite-maps">
           <h2>Favourited Mappi</h2>
-          <div id="favourite-maps" class="my-maps">
-
+          <div id="favourite-maps" class="map-list">
           </div>
         </section>
         <section class="user-contributed-maps">
           <h2>Contributed Mappi</h2>
-          <div id="contributed-maps" class="my-maps">
-
+          <div id="contributed-maps" class="map-list">
           </div>
         </section>
       </div>
