@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+
+</head>
+
+<body>
+  <%- include('partials/_header', {user: user}); %>
+  <div class="welcome-container">
+    <h1>Welcome to Mappi</h1>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem necessitatibus quae a, neque itaque labore. </p>
+    <div class="homepage-buttons">
+        <a href="#" class="create-mappi-button">Create Mappi</a>
+    </div>
+</div>
+</body>
+
+</html>
