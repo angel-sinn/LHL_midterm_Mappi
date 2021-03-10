@@ -2,12 +2,12 @@ const express = require('express');
 const router  = express.Router();
 const request = require('request');
 const process = require('process');
+const { getPackedSettings } = require('http2');
+// const { getPins } = require('../public/scripts/app');
 
 
 // this will either be used to send and store data about the map..
 // right now I am trying to get the map api without exposing the api keyy
-
-// GETs below
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -17,11 +17,24 @@ module.exports = (db) => {
       res.render("index", templateVars);
   });
 
-  router.get("/:id", (req,res) => {
-    //return data about single map
+  // GETs below
+
+   router.get('/:id', (req, res) => {
+    let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
+    return db.query(query, [req.params.id])
+      .then(res => {
+        console.log(res.rows[0]); // hangs due to lack of data use
+        // returns anon. map data object
+        // should also return map_id pins
+      })
+      .catch(err => console.log(err.stack));
   });
-  router.post('/', (req,res) => {
+
+  // POSTs below
+
+  router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
+      let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
 
       console.log(req.body);
       const userAlice = {
@@ -54,34 +67,57 @@ module.exports = (db) => {
       }).catch((e) => console.log(e));
   });
 
+  router.post('/', (req, res) => {
+    let query = `SELECT * FROM maps;`
+    db.query(query)
+      .then(response => {
+        res.end(console.log(response.rows)); // post that returns all map data in array
+        // should insert maps data into maps
+      });
+  });
+
+  router.post('/:id', (req, res) => {
+    let query = `SELECT maps.* FROM maps WHERE id = $1;`;
+    return db.query(query, [req.params.id])
+      .then(res => {
+        console.log(res.rows); // hangs due to lack of data use
+        /*SELECT pins.*
+          FROM maps
+          JOIN pins ON maps(id) = map_id
+          WHERE maps.id = $1;*/ // this will be an AJAX request...
+      })
+      .catch(err => console.log(err.stack));
+  });
+
+  // WIP ~ probably need to change lat, lng, zoom reqs
+  router.put('/:id/put', (req, res) => {
+    let query =`
+    UPDATE maps
+      SET title = ${req.body.title},
+          description = ${req.body.description},
+          category = ${req.body.category},
+          lat = ${req.body.lat},
+          lng = ${req.body.lng},
+          zoom = ${req.body.zoom}
+      WHERE id = $1;
+    `;
+    console.log(query);
+    return db.query(query, [req.params.id])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err.stack));
+  })
+
+  router.delete('/:id/delete', (req, res) => {
+    let query =`DELETE FROM maps WHERE id = $1`;
+    console.log(query);
+    return db.query(query, [req.params.id])
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => console.log(err.stack));
+  })
+
   return router;
 };
-
-// // POSTs below
-// router.get('/', (req,res) => {
-//   // get all maps
-// });
-// router.get('/:id', (req,res) => {
-//   // get single map
-//   // get pins with map
-// });
-// router.post('/:id', (req,res) => {
-//   // update single map details (title, type, etc.)
-// });
-// router.post('/:id/put', (req,res) => {
-//   // update single map details (title, type, etc.)
-// });
-// router.post('/',(req,res) => {
-//   // Create new map
-// });
-// router.post('/:id/delete',(req,res) => {
-//   // delete map :id
-// });
-
-
-
-
-
-router.post("/:id/post", (req, res) => {
-
-});
