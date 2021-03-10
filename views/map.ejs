@@ -23,31 +23,12 @@
 
     <div class="map-info-side">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <form action="/maps/save" type="POST" class="map-info">
-=======
-      <form action="" class="map-info">
->>>>>>> ee33bd92d3a6fb2ac3c02ffad278c2ec6efeed87
-=======
       <form class="map-info">
->>>>>>> dc7fca0dfe9ebafb898392737999af2eea43bba3
         <h2>Title: <%= mapData.title %></h2>
         <h3>Description: <%= mapData.description %></h3>
         <input class="save-map" id="save-map" type="submit" value="Save Mappi">
       </form>
-<<<<<<< HEAD
-=======
-      <form action="" class="map-info">
-        <h2>Title: <%= mapData.title %></h2>
-        <h3>Description: <%= mapData.description %></h3>
-        <input class="save-map" type="submit" value="Save Mappi">
-      </formaction=class=>
->>>>>>> 3e3f0c3ce57905c6362fec6f766f2f2c5f0074ca
-=======
       <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
->>>>>>> dc7fca0dfe9ebafb898392737999af2eea43bba3
 
       <form class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
@@ -65,19 +46,8 @@
             <label for="update-pin-url">Pin URL</label><br>
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-        <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
-      </form>
-=======
-        <input class="update-pin-submit" type="submit" value="Save Pin">
-    </form>
->>>>>>> 3e3f0c3ce57905c6362fec6f766f2f2c5f0074ca
-=======
       </form>
       <div class="update-pin-submit" id="update-pin-button"></div>
->>>>>>> dc7fca0dfe9ebafb898392737999af2eea43bba3
     </div>
 
 </div>
@@ -89,11 +59,9 @@
     let markerId = 0;
     let selectedMarkerId = 0;
     const mapId = <%= mapData.id %>;
-
     const uniqueId = function() {
         return ++markerId;
     }
-
     // The markers object is exposed to the console
     // In the browser type "markers" and hit enter to see all the markers
     // To get a position of a single marker (ex. id=1) type the following
@@ -101,7 +69,6 @@
     // or
     // markers[1].position.lng()
     let markers = {};
-
     function imageExists(url, callback) {
       if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
         var img = new Image();
@@ -112,7 +79,6 @@
         callback(false);
       };
     }
-
     const updatePinInfo = function(id) {
       let imageTag ='';
       imageExists(markers[id].image_url, (exists) => {
@@ -135,7 +101,6 @@
         infowindow.setContent(contentString)
       })
     };
-
     const savePin = function(id) {
       markers[id].title = document.getElementById('update-pin-title').value;
       markers[id].description = document.getElementById('update-pin-descprition').value;
@@ -145,7 +110,6 @@
       document.getElementById('update-pin-descprition').value = '';
       document.getElementById('update-pin-url').value = '';
     };
-
     const parsePins = function(pins) {
       newObj = {};
       for(const pin in pins){
@@ -161,7 +125,6 @@
       }
       return newObj;
     };
-
     const saveMap = function() {
       console.log("map id", mapId);
       console.log("pins", markers);
@@ -173,8 +136,6 @@
         console.log(response)
       });
     }
-
-
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
       let form = document.querySelector("form.update-pin");
@@ -183,14 +144,12 @@
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
     };
-
     const addlistener = function(id) {
       console.log('adding listener to id', id);
       document.getElementById(`deletebtn${id}`).addEventListener('click', ()=>{
         console.log(id);
       })
     }
-
     const createMarker = function(map, position) {
       const id = uniqueId(); // get new id
       const marker = new google.maps.Marker({ // create a marker and set id
@@ -212,18 +171,14 @@
               <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
             </div>`
       });
-
       infowindow = new google.maps.InfoWindow({
         content: marker.infoWindowContent,
       });
-
-
       // add click listener
       marker.addListener("click", () => {
         if (infowindow){
           infowindow.close();
         }
-
       infowindow = new google.maps.InfoWindow({
         content: marker.infoWindowContent,
       });
@@ -231,21 +186,14 @@
         infowindow.open(map, marker);
         editMarker(selectedMarkerId);
       });
-
-
       markers[id] = marker; // cache created marker to markers object with id as its key
       return marker;
     }
-
-
-
-
     const deleteMarker = function(id) {
         const marker = markers[id]; // find the marker by given id
         marker.setMap(null);
         delete markers[id];
     }
-
     // ############################ this data will be filled out by ejs ###############################
     // const mapData = {
     //   id: //generate
@@ -256,34 +204,24 @@
     //   zoom:
     //   description:
     // }
-
     function initMap() {
       // The location of Uluru
       const myLatlng = { lat: -25.363, lng: 131.044 };
-
       const uluru = { lat: -25.344, lng: 131.036 }; // make api request to user current locaiton?
-
       // The map, centered at Uluru
       const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 4,
         center: uluru,
       });
-
       // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
         const latLng = {
           lat: mapsMouseEvent.latLng.toJSON().lat,
           lng: mapsMouseEvent.latLng.toJSON().lng
         }
-
         const marker = createMarker(map, latLng);
-
       });
     };
-
-
-
-
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
     type="text/javascript"></script>
