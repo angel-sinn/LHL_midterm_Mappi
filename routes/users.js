@@ -64,7 +64,7 @@ module.exports = (db) => {
       });
     })
 
-    router.get('/:id/favourite_maps', (req, res) => {
+    router.get('/:id/favourited_maps', (req, res) => {
 
       let query = `
       SELECT maps.title AS map_title, maps.id AS map_id
