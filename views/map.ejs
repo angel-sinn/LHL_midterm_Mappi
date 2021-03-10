@@ -133,8 +133,6 @@
     };
 
     const saveMap = function() {
-      console.log("map id", mapId);
-      console.log("pins", markers);
       $.ajax({
         url: '/pins',
         method: 'POST',
