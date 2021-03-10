@@ -23,14 +23,14 @@
 
     <div class="map-info-side">
 
-      <form class="map-info">
+      <div class="map-info">
         <h2>Title: <%= mapData.title %></h2>
-        <h3>Description: <%= mapData.description %></h3>
-        <input class="save-map" id="save-map" type="submit" value="Save Mappi">
-      </form>
-      <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
+        <h4>Description: <%= mapData.description %></h4>
+        <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
+      </div>
 
-      <form class="update-pin">
+
+      <div class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
         <div class="update-pin-title">
             <label for="update-pin-title">Pin Title</label><br>
@@ -46,8 +46,8 @@
             <label for="update-pin-url">Pin URL</label><br>
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
-      </form>
-      <div class="update-pin-submit" id="update-pin-button"></div>
+        <div class="update-pin-submit" id="update-pin-button"></div>
+      </div>
     </div>
 
 </div>
@@ -133,7 +133,7 @@
     }
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
-      let form = document.querySelector("form.update-pin");
+      let form = document.querySelector("div.update-pin");
       document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
