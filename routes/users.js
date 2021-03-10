@@ -51,5 +51,31 @@ module.exports = (db) => {
       });
     })
 
+    router.get('/:id/contributed', (req, res) => {
+
+      let query = `
+      SELECT DISTINCT maps.title AS title, maps.id AS map_id, pins.user_id AS collaborated_maps
+      FROM pins
+      JOIN maps ON maps.id = map_id
+      WHERE pins.user_id = $1;`;
+      return db.query(query, [req.params.id])
+      .then(response => {
+        res.json(response.rows);
+      });
+    })
+
+    router.get('/:id/favourite_maps', (req, res) => {
+
+      let query = `
+      SELECT maps.title AS map_title, maps.id AS map_id
+      FROM favourite_maps
+      JOIN maps ON maps.id = map_id
+      WHERE favourite_maps.user_id = $1;`;
+      return db.query(query, [req.params.id])
+      .then(response => {
+        res.json(response.rows);
+      });
+    })
+
   return router;
 };
