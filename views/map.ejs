@@ -23,7 +23,7 @@
 
     <div class="map-info-side">
 
-      <form action="" class="map-info">
+      <form class="map-info">
         <h2>Title: <%= mapData.title %></h2>
         <h3>Description: <%= mapData.description %></h3>
         <input class="save-map" id="save-map" type="submit" value="Save Mappi">
@@ -73,15 +73,20 @@
     let markers = {};
 
     function imageExists(url, callback) {
-      var img = new Image();
-      img.onload = function() { callback(true); };
-      img.onerror = function() { callback(false); };
-      img.src = url;
+      if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
+        var img = new Image();
+        img.onload = function() { callback(true); };
+        img.onerror = function() { callback(false); };
+        img.src = url;
+      } else {
+        callback(false);
+      };
     }
 
     const updatePinInfo = function(id) {
       let imageTag ='';
       imageExists(markers[id].image_url, (exists) => {
+        console.log("exist= ", exists);
         if  (exists) {
           imageTag = `<img src="${markers[id].image_url}">`
         } else {
@@ -95,6 +100,7 @@
             <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
         </div>
         `;
+        console.log(markers[id]);
         markers[id].infoWindowContent = contentString;
         infowindow.setContent(contentString)
       })
@@ -157,7 +163,7 @@
             </div>`
       });
 
-      const infowindow = new google.maps.InfoWindow({
+      infowindow = new google.maps.InfoWindow({
         content: marker.infoWindowContent,
       });
 
