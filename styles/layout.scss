@@ -170,7 +170,7 @@ div#map {
 }
 
 // Displays mappi info
-form.map-info {
+div.map-info {
   height: 200px;
   background-color: $formblue;
   color: $grey;
@@ -181,10 +181,16 @@ form.map-info {
   justify-content: space-around;
   padding: 10px;
   margin-bottom: 30px;
+
+  h4 {
+    font-size: 0.9rem;
+  }
 }
 
+
+
 // Displays edit mappi form
-form.update-pin {
+div.update-pin {
   height: 375px;
   background-color: $formblue;
   color: $grey;
@@ -195,7 +201,18 @@ form.update-pin {
   justify-content: space-around;
   padding: 10px;
   display: none;
+
+  label {
+    font-family: Varela Round, sans-serif;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    margin-bottom: 5px;
+  }
 }
+
+
 
 %update-buttons {
   height: 35px;
@@ -210,12 +227,21 @@ form.update-pin {
   align-self: flex-end;
 }
 
-input.save-map {
+button.save-map {
   @extend %update-buttons;
 }
 
-input.update-pin-submit {
+.update-pin-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+button#save-pin-local {
   @extend %update-buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 // User profile box
