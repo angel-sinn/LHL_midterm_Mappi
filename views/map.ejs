@@ -28,6 +28,7 @@
         <h3>Description: <%= mapData.description %></h3>
         <input class="save-map" id="save-map" type="submit" value="Save Mappi">
       </form>
+      <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
 
       <form class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
@@ -86,7 +87,6 @@
         } else {
           imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
         }
-        console.log(infowindow.content);
         const contentString = `
         <div class="infowindow" id="infowindow">
             <h1>${markers[id].title}</h1>
@@ -96,13 +96,7 @@
         </div>
         `;
         markers[id].infoWindowContent = contentString;
-
-        // document.getElementById('infowindow').innerHTML = contentString;
         infowindow.setContent(contentString)
-        // infowindow = new google.maps.InfoWindow({
-        //   content: contentString,
-        // });
-        console.log(id);
       })
     };
 
@@ -115,6 +109,15 @@
       document.getElementById('update-pin-descprition').value = '';
       document.getElementById('update-pin-url').value = '';
     };
+
+    const saveMap = function() {
+      console.log("map id", mapId);
+      console.log("pins", markers);
+      $.ajax({
+        // this should send all the pin data
+        // use helper function to get pin data
+      })
+    }
 
 
     const editMarker = function(id) {
