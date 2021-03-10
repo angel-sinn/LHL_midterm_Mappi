@@ -28,12 +28,13 @@ module.exports = (db) => {
     return db.query(query, [req.params.id])
       .then(response => {
         const mapData = response.rows[0];
+
         const templateVars = {
           API_KEY: process.env.API_KEY,
-          mapData
+          mapData: mapData
         }
         console.log('map: ', mapData); // hangs due to lack of data use
-        getPins(mapData.id);
+
         res.render("map_test", templateVars);
       })
   });
