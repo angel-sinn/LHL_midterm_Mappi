@@ -11,9 +11,18 @@ const { getPackedSettings } = require('http2');
 
 module.exports = (db) => {
   const getPins = require('../public/scripts/helper.js')(db);
+  const userAlice = {
+    id: 1,
+    name: 'Alice',
+    email: 'allice@mappi.com',
+    password: 'password',
+    image: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80',
+  }
+
   router.get("/", (req, res) => {
       const templateVars = {
         API_KEY: process.env.API_KEY,
+        user: userAlice,
       }
       res.render("index", templateVars);
   });
@@ -21,14 +30,6 @@ module.exports = (db) => {
   // GETs below
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
     // make query
-
-    const userAlice = {
-      id: 1,
-      name: 'Alice',
-      email: 'allice@mappi.com',
-      password: 'password',
-      image: 'https://imgur.com/r/puppies/QfLwddi',
-    }
     const mapData = {
       title: req.body['new-map-title'],
       description: req.body['new-map-description'],
