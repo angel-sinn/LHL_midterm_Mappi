@@ -126,14 +126,12 @@
       return newObj;
     };
     const saveMap = function() {
-      console.log("map id", mapId);
-      console.log("pins", markers);
       $.ajax({
         url: '/pins',
         method: 'POST',
         data: parsePins(markers),
       }).done(response => {
-        console.log(response)
+        window.location.replace(response);
       });
     }
     const editMarker = function(id) {
