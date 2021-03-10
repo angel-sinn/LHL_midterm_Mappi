@@ -56,8 +56,8 @@
   <script>
     // This id will have to be stored in the database
     let markerId = 0;
-    let map;
     const mapId = <%= mapData.id %>;
+    let map;
 
     const uniqueId = function() {
         return ++markerId;
@@ -155,8 +155,6 @@
 
     const addMarkers = function (markers) {
         for (let marker in markers) {
-          console.log("ml", markers[marker].lat);
-          console.log("m", markers[marker]);
           const newMarker = new google.maps.Marker({
           id: uniqueId(),
           title: markers[marker].title,
