@@ -140,7 +140,7 @@
         method: 'POST',
         data: parsePins(markers),
       }).done(response => {
-        console.log(response)
+        window.location.replace(response);
       });
     }
 
