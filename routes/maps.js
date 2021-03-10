@@ -65,7 +65,8 @@ module.exports = (db) => {
 
         const templateVars = {
           API_KEY: process.env.API_KEY,
-          mapData: mapData
+          mapData: mapData,
+          user: userAlice
         }
         console.log('map: ', mapData); // hangs due to lack of data use
 
