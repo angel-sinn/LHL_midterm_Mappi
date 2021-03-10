@@ -35,7 +35,7 @@ module.exports = (db) => {
         }
         console.log('map: ', mapData); // hangs due to lack of data use
 
-        res.render("map_test", templateVars);
+        res.render("map_view", templateVars);
       })
   });
 
