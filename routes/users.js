@@ -51,7 +51,7 @@ module.exports = (db) => {
       });
     })
 
-    router.get('/:id/contributed', (req, res) => {
+    router.get('/:id/contributed_maps', (req, res) => {
 
       let query = `
       SELECT DISTINCT maps.title AS title, maps.id AS map_id, pins.user_id AS collaborated_maps
