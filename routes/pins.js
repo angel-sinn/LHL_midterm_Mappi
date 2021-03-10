@@ -26,10 +26,23 @@ module.exports = (db) => {
       });
   });
 
-  // update pins for a map
-  // router.post("/:id", (req, res) = {
+  router.get("/:id", (req, response) => {
+    let query = `
+    SELECT *
+    FROM pins
+    WHERE map_id = $1;
+    `
+    console.log('received');
+    return db.query(query, [req.params.id])
+    .then(res => {
+      response.json(res.rows);
+    });
+  })
 
-  // })
+
+
+
+  router.post("/", (req,res)=>{
 
 
   // create pins for a map
@@ -45,12 +58,13 @@ module.exports = (db) => {
     });
     console.log(req.body);
   });
+});
 
   // delete pins for a map
-  router.post("/:id/delete", (req, res) => {
+  // router.post("/:id/delete", (req, res) => {
 
 
-  })
+
 
   // router.get('/:id', (req, res) => { // id is map_id
   //   const templateVars = pins; //example code
