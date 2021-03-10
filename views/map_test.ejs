@@ -56,6 +56,7 @@
   <script>
     // This id will have to be stored in the database
     let markerId = 0;
+    let map;
     const mapId = <%= mapData.id %>;
 
     const uniqueId = function() {
@@ -151,6 +152,25 @@
     //   description:
     // }
 
+
+    const addMarkers = function (markers) {
+        for (let marker in markers) {
+          console.log("ml", markers[marker].lat);
+          console.log("m", markers[marker]);
+          const newMarker = new google.maps.Marker({
+          id: uniqueId(),
+          title: markers[marker].title,
+          description: markers[marker].description,
+          image_url:'',
+          position: {lat: Number(markers[marker].lat), lng: Number(markers[marker].lng)},
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: markers[marker].address,
+          map_id: mapId
+          });
+        }
+      }
     function initMap() {
       // The location of Uluru
       const myLatlng = { lat: -25.363, lng: 131.044 };
@@ -158,7 +178,7 @@
       const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
 
       // The map, centered at Uluru
-      const map = new google.maps.Map(document.getElementById("map"), {
+      map = new google.maps.Map(document.getElementById("map"), {
         zoom: 4,
         center: location,
       });
@@ -180,24 +200,7 @@
 
     };
 
-    const addMarkers = function (markers) {
-        for (let marker in markers) {
-          console.log("ml", markers[marker].lat);
-          console.log("m", markers[marker]);
-          let newMarker = new google.maps.Marker({
-          id: uniqueId(),
-          title: markers[marker].title,
-          description: markers[marker].description,
-          image_url:'',
-          position: {lat: Number(markers[marker].lat), lng: Number(markers[marker].lng)},
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          address: markers[marker].address,
-          map_id: mapId
-          });
-        }
-      }
+
 
 
 
