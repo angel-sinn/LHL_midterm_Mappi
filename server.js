@@ -43,13 +43,13 @@ const userAlice = {
   image: 'https://imgur.com/r/puppies/QfLwddi',
 }
 
-app.get("/", (req, res) => {
-  const templateVars = {
-    user: userAlice,
-    API_KEY: process.env.API_KEY
-  }
-  res.render("index", templateVars);
-});
+// app.get("/", (req, res) => {
+//   const templateVars = {
+//     user: userAlice,
+//     API_KEY: process.env.API_KEY
+//   }
+//   res.render("index", templateVars);
+// });
 
 
 
@@ -58,7 +58,7 @@ app.get("/", (req, res) => {
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 
-
+const homeRoutes = require("./routes/home");
 const usersRoutes = require("./routes/users");
 const mapsRoutes = require("./routes/maps");
 const pinsRoutes = require("./routes/pins");
@@ -67,7 +67,7 @@ const favouriteMapsRoutes = require("./routes/favourite_maps");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 
-
+app.use("/", homeRoutes(db));
 app.use("/users", usersRoutes(db));
 app.use("/maps", mapsRoutes(db));
 app.use("/pins", pinsRoutes(db));
