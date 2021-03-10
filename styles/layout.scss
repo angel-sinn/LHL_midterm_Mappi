@@ -297,3 +297,43 @@ img.user-profile-picture {
   }
 }
 
+// Homepage
+
+.welcome-container {
+
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  h1 {
+      font-family: Varela Round, sans-serif;
+      font-size: 2.75rem;
+      color: $grey;
+      margin-bottom: 20px;
+      margin-left: 15px;
+  }
+
+  p {
+      font-family: Varela Round, sans-serif;
+      font-size: 1.25rem;
+      margin-left: 15px;
+  }
+}
+
+div.homepage-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.create-mappi-button {
+    font-family: Varela Round, sans-serif;
+    font-size: 1.25rem;
+    text-decoration: none;
+    border: 1px solid $grey;
+    border-radius: 5px;
+    padding: 10px;
+    color: $grey;
+    margin: 60px 20px 0 15px;
+}
