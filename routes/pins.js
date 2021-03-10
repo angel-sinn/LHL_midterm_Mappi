@@ -27,9 +27,9 @@ module.exports = (db) => {
   });
 
   // update pins for a map
-  router.post("/:id", (req, res) = {
+  // router.post("/:id", (req, res) = {
 
-  })
+  // })
 
 
   // create pins for a map
