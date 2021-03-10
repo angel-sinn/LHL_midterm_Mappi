@@ -17,7 +17,7 @@ module.exports = (db) => {
     db.query(query, [req.params.id])
       .then(data => {
         const pins = data.rows;
-        res.json({ pins });
+        res.json(pins);
       })
       .catch(err => {
         res
