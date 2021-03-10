@@ -25,10 +25,12 @@
 
       <form action="/maps/save" type="POST" class="map-info">
         <h2>Title: <%= mapData.title %></h2>
-        <h3>Description: <%= mapData.description %></h3>
-        <input class="fav-map" id="fav-map" type="submit" value="Favourite">
-        <input class="save-map" id="save-map" type="submit" value="Save Mappi">
-      </form>
+        <h4>Description: <%= mapData.description %></h4>
+        <div class="fav-save-buttons">
+          <input class="fav-map" id="fav-map" type="submit" value="Fav Mappi">
+          <input class="save-map" id="save-map" type="submit" value="Save Mappi">
+        </div>
+        </form>
 
       <form class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
@@ -47,7 +49,7 @@
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
 
-        <input class="update-pin-submit" id="update-pin-submit" value="Save Pin">
+        <button class="update-pin-submit" id="update-pin-submit" value="Save Pin">Save Pin</button>
       </form>
     </div>
 
