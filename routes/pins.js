@@ -7,8 +7,6 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-<<<<<<< HEAD
-=======
   // get pins for a map
   router.get("/:id", (req, res) => {
     let query = `
@@ -28,7 +26,6 @@ module.exports = (db) => {
       });
   });
 
->>>>>>> features/map_api
   router.get("/:id", (req, response) => {
     let query = `
     SELECT *
