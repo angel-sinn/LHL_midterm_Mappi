@@ -34,9 +34,8 @@ module.exports = (db) => {
 
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
-      let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
+      // let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
 
-      console.log(req.body);
       const userAlice = {
         id: 1,
         name: 'Alice',
@@ -57,8 +56,8 @@ module.exports = (db) => {
         mapData: mapData
       }
       let query = `
-      INSERT INTO maps (user_id, title, category, lat, lng, zoom)
-      VALUES (${userAlice.id}, '${mapData.title}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom})
+      INSERT INTO maps (user_id, title, description, category, lat, lng, zoom)
+      VALUES (${userAlice.id}, '${mapData.title}','${mapData.description}', '${mapData.category}', ${mapData.location.lat}, ${mapData.location.lng}, ${mapData.zoom})
       RETURNING *;
       `;
       db.query(query).then(response => {
