@@ -1,7 +1,7 @@
 // helper functions below
 module.exports = (db) => {
 
-  const getPins = function(map_id) {
+  return getPins = function(map_id) {
     const queryStr = `
     SELECT pins.*
     FROM maps
@@ -9,10 +9,9 @@ module.exports = (db) => {
     WHERE map_id = $1;
     `;
     return db.query(queryStr, [map_id])
-      .then(res => console.log(res.rows))
+      .then(res => res.rows)
       .catch(err => (console.log(err.stack)));
   };
-  return getPins;
 }
 
 
