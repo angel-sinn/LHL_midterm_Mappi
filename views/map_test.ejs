@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+  <script type="text/javascript" src="/scripts/app.js"></script>
 
 </head>
 
@@ -155,20 +155,19 @@
       // The location of Uluru
       const myLatlng = { lat: -25.363, lng: 131.044 };
 
-      const uluru = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
-      console.log("uluru", uluru);
+      const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
 
       // The map, centered at Uluru
       const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 4,
-        center: uluru,
+        center: location,
       });
 
       let infoWindow = new google.maps.InfoWindow({
         content: "Click the map to get Lat/Lng!",
         position: myLatlng,
       });
-      // Configure the click listener.
+      // // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
         const latLng = {
           lat: mapsMouseEvent.latLng.toJSON().lat,
@@ -176,15 +175,34 @@
         }
 
         const marker = createMarker(map, latLng);
-
       });
+
+
     };
 
+    const addMarkers = function (markers) {
+        for (let marker in markers) {
+          console.log("ml", markers[marker].lat);
+          console.log("m", markers[marker]);
+          let newMarker = new google.maps.Marker({
+          id: uniqueId(),
+          title: markers[marker].title,
+          description: markers[marker].description,
+          image_url:'',
+          position: {lat: Number(markers[marker].lat), lng: Number(markers[marker].lng)},
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: markers[marker].address,
+          map_id: mapId
+          });
+        }
+      }
 
 
 
   </script>
-<script async src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
     type="text/javascript"></script>
 
 
