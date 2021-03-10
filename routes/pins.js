@@ -21,6 +21,22 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/:id", (req, response) => {
+    let query = `
+    SELECT *
+    FROM pins
+    WHERE map_id = $1;
+    `
+    console.log('received');
+    return db.query(query, [req.params.id])
+    .then(res => {
+      response.json(res.rows);
+    });
+  })
+
+
+
+
   router.post("/", (req,res)=>{
 
     console.log(req.body);

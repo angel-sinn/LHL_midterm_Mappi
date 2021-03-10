@@ -10,6 +10,7 @@ const { getPackedSettings } = require('http2');
 // right now I am trying to get the map api without exposing the api keyy
 
 module.exports = (db) => {
+  const getPins = require('../public/scripts/helper.js')(db);
   router.get("/", (req, res) => {
       const templateVars = {
         API_KEY: process.env.API_KEY,
@@ -19,22 +20,42 @@ module.exports = (db) => {
 
   // GETs below
 
-   router.get('/:id', (req, res) => {
-    let query = `SELECT maps.* FROM maps WHERE id = $1;` // fetches map data depending on requested map id
+  router.get('/:id', (req, res) => {
+    let query = `
+    SELECT id, title, description, lat, lng FROM maps WHERE id = $1
+    `;
+    // console.log(query);
     return db.query(query, [req.params.id])
-      .then(res => {
-        console.log(res.rows[0]); // hangs due to lack of data use
-        // returns anon. map data object
-        // should also return map_id pins
+      .then(response => {
+        const mapData = response.rows[0];
+
+        const templateVars = {
+          API_KEY: process.env.API_KEY,
+          mapData: mapData
+        }
+        console.log('map: ', mapData); // hangs due to lack of data use
+
+        res.render("map_test", templateVars);
       })
-      .catch(err => console.log(err.stack));
   });
+
+// const getPins = function(map_id) {
+//   const queryStr = `
+//   SELECT pins.*
+//   FROM maps
+//   JOIN pins ON maps.id = map_id
+//   WHERE map_id = $1;
+//   `;
+//   return db.query(queryStr, [map_id])
+//     .then(res => console.log('map pins: ', res.rows))
+//     .catch(err => (console.log(err.stack)));
+// };
 
   // POSTs below
 
   router.post('/create', (req,res) => { //change to /create/:id once map data functional
       // make query
-      let query = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
+      let queryStr = 'SELECT * FROM maps;'; // add WHERE id = :id when functional
 
       console.log(req.body);
       const userAlice = {
@@ -76,15 +97,17 @@ module.exports = (db) => {
       });
   });
 
+  // returns map and pin data from map_id
   router.post('/:id', (req, res) => {
-    let query = `SELECT maps.* FROM maps WHERE id = $1;`;
+    let query = `
+    SELECT title, lat, lng FROM maps WHERE id = $1
+    UNION
+    SELECT title, lat, lng FROM pins WHERE map_id = $1;
+    `;
+    console.log(query);
     return db.query(query, [req.params.id])
       .then(res => {
         console.log(res.rows); // hangs due to lack of data use
-        /*SELECT pins.*
-          FROM maps
-          JOIN pins ON maps(id) = map_id
-          WHERE maps.id = $1;*/ // this will be an AJAX request...
       })
       .catch(err => console.log(err.stack));
   });
@@ -99,7 +122,8 @@ module.exports = (db) => {
           lat = ${req.body.lat},
           lng = ${req.body.lng},
           zoom = ${req.body.zoom}
-      WHERE id = $1;
+      WHERE id = $1
+      RETURNING *;
     `;
     console.log(query);
     return db.query(query, [req.params.id])
