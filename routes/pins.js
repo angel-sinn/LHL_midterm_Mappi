@@ -7,25 +7,6 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  // get pins for a map
-  router.get("/:id", (req, res) => {
-    let query = `
-    SELECT * FROM pins
-    WHERE map_id = $1
-    ;`;
-    console.log(query);
-    db.query(query, [req.params.id])
-      .then(data => {
-        const pins = data.rows;
-        res.json({ pins });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
   router.get("/:id", (req, response) => {
     let query = `
     SELECT *
