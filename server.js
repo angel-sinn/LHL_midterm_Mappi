@@ -36,6 +36,7 @@ app.use(express.static('public'));
 
 // dummy objects
 const userAlice = {
+  id: 1,
   name: 'Alice',
   email: 'allice@mappi.com',
   password: 'password',
