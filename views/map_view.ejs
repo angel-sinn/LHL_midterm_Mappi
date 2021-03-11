@@ -32,7 +32,8 @@
           <input hidden id="user_id" type="number" name="user_id" value=<%= user.id %>>
           <input hidden id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
         </div>
-        </form>
+      </form>
+      <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
 
       <div class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
@@ -71,7 +72,6 @@
     }
 
     let markers = {};
-    let originalPins = {};
 
     function imageExists(url, callback) {
       if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
@@ -87,7 +87,6 @@
 
     const updatePinInfo = function(id) {
       let imageTag ='';
-      if(markers[id]) {
         imageExists(markers[id].image_url, (exists) => {
         if  (exists) {
           imageTag = `<img src="${markers[id].image_url}">`
@@ -104,26 +103,7 @@
         `;
         markers[id].infoWindowContent = contentString;
         infowindow.setContent(contentString)
-      })
-    } else {
-      imageExists(originalPins[id].image_url, (exists) => {
-        if  (exists) {
-          imageTag = `<img src="${originalPins[id].image_url}">`
-        } else {
-          imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
-        }
-        const contentString = `
-        <div class="infowindow" id="infowindow">
-            <h1>${originalPins[id].title}</h1>
-            ${imageTag}
-            <p>${originalPins[id].description}</p>
-            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
-        </div>
-        `;
-        originalPins[id].infoWindowContent = contentString;
-        infowindow.setContent(contentString)
       });
-    }
     };
 
 
@@ -137,15 +117,9 @@
     };
 
     const savePin = function(id) {
-      if(markers[id]) {
-        markers[id].title = document.getElementById('update-pin-title').value;
-        markers[id].description = document.getElementById('update-pin-descprition').value;
-        markers[id].image_url = document.getElementById('update-pin-url').value;
-      } else {
-        originalPins[id].title = document.getElementById('update-pin-title').value;
-        originalPins[id].description = document.getElementById('update-pin-descprition').value;
-        originalPins[id].image_url = document.getElementById('update-pin-url').value;
-      }
+      markers[id].title = document.getElementById('update-pin-title').value;
+      markers[id].description = document.getElementById('update-pin-descprition').value;
+      markers[id].image_url = document.getElementById('update-pin-url').value;
       updatePinInfo(id);
       document.getElementById('update-pin-title').value = '';
       document.getElementById('update-pin-descprition').value = '';
@@ -205,18 +179,10 @@
 
     const deleteMarker = function(id) {
       console.log(id);
-      if (markers[id]) {
-        console.log(markers[id]);
-        const marker = markers[id]; // find the marker by given id
-        marker.setMap(null);
-        delete originalPins[id];
-      } else {
-        console.log(originalPins[id]);
-        const marker = originalPins[id];
-        marker.setMap(null);
-        delete originalPins[id];
-      }
-
+      console.log(markers[id]);
+      const marker = markers[id]; // find the marker by given id
+      marker.setMap(null);
+      delete markers[id];
     }
 
 
@@ -243,7 +209,7 @@
               <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
             </div>`
           });
-          originalPins[newMarker.id] = newMarker;
+          markers[newMarker.id] = newMarker;
           newMarker.addListener("click", () => {
             if (infowindow){
               infowindow.close();
@@ -305,22 +271,14 @@
 
     const saveMap = function() {
       $.ajax({
-        url: '/pins',
-        method: 'POST',
-        data: parsePins(markers),
+          url: '/pins',
+          method: 'PUT',
+          data: parsePins(markers),
         })
         .done(response => {
-          console.log(response);
-          // update existing pins
-          $.ajax({
-            url:'/pins',
-            method: 'PUT',
-            data: parsePins(originalPins),
-          }).done(response => {
-            window.location.replace('users/1'); //go home
-          });
+          window.location.replace(`/users/${currentUser.id}`); //go home
         });
-    }
+      }
 
 
 

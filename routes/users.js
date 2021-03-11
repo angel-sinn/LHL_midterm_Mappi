@@ -67,7 +67,7 @@ module.exports = (db) => {
     router.get('/:id/favourite_maps', (req, res) => {
 
       let query = `
-      SELECT maps.title AS map_title, maps.id AS map_id
+      SELECT DISTINCT maps.id AS map_id, maps.title AS map_title
       FROM favourite_maps
       JOIN maps ON maps.id = map_id
       WHERE favourite_maps.user_id = $1;`;
