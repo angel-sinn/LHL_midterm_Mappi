@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+  <script type="text/javascript" src="/scripts/getUserMaps.js"></script>
 
 </head>
 
@@ -22,9 +22,18 @@
     <h1>Welcome to Mappi</h1>
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem necessitatibus quae a, neque itaque labore. </p>
     <div class="homepage-buttons">
-        <a href="#" class="create-mappi-button">Create Mappi</a>
+        <a href="/maps/" class="create-mappi-button">Create Mappi</a>
+        <a href="#view-mappi" class="view-mappi-button">View Mappi</a>
     </div>
-</div>
+  </div>
+  <section id="view-mappi">
+    <h2>Mappi</h2>
+    <div id="mappi-list" class="mappi-list">
+      <% for (let map in mapData) { %>
+        <a href="/maps/<%= mapData[map].id %>"><div><%= mapData[map].title %></div></a>
+         <% } %>
+    </div>
+  </section>
 </body>
 
 </html>

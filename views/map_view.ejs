@@ -26,11 +26,11 @@
       <form action="/favourite_maps" method="POST" class="map-info">
         <h2>Title: <%= mapData.title %></h2>
         <h4>Description: <%= mapData.description %></h4>
-        <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
         <div class="fav-save-buttons">
-          <input hidden class="fav-map" id="user_id" type="number" name="user_id" value=<%= user.id %>>
-          <input hidden class="fav-map" id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
           <input class="fav-map" type="submit" value="Fav Mappi">
+          <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
+          <input hidden id="user_id" type="number" name="user_id" value=<%= user.id %>>
+          <input hidden id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
         </div>
         </form>
 
