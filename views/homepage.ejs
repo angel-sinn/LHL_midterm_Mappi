@@ -11,6 +11,9 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
 </head>
 
 <body>
@@ -27,8 +30,26 @@
     <h2>Mappi</h2>
     <div id="mappi-list" class="mappi-list">
       <% for (let map in mapData) { %>
-        <a href="/maps/<%= mapData[map].id %>"><div><%= mapData[map].title %></div></a>
-         <% } %>
+        <% if(mapData[map].category === 'bar') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-glass-martini-alt"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'cafe') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-coffee"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'grocery') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-shopping-cart"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'hospital') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-clinic-medical"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'hotel') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-concierge-bell"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'park') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-tree"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'pharmacy') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-prescription-bottle-alt"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'restaurant') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-utensils"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'sightseeing') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-camera"></i><%= mapData[map].title %></div></a>
+        <% } %>
+      <% } %>
     </div>
   </section>
 </body>
