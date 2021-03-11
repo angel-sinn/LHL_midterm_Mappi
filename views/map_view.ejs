@@ -70,6 +70,7 @@
     }
 
     let markers = {};
+    let originalPins = {};
 
     function imageExists(url, callback) {
       if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
@@ -85,7 +86,8 @@
 
     const updatePinInfo = function(id) {
       let imageTag ='';
-      imageExists(markers[id].image_url, (exists) => {
+      if(markers[id]) {
+        imageExists(markers[id].image_url, (exists) => {
         if  (exists) {
           imageTag = `<img src="${markers[id].image_url}">`
         } else {
@@ -102,6 +104,25 @@
         markers[id].infoWindowContent = contentString;
         infowindow.setContent(contentString)
       })
+    } else {
+      imageExists(originalPins[id].image_url, (exists) => {
+        if  (exists) {
+          imageTag = `<img src="${originalPins[id].image_url}">`
+        } else {
+          imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
+        }
+        const contentString = `
+        <div class="infowindow" id="infowindow">
+            <h1>${originalPins[id].title}</h1>
+            ${imageTag}
+            <p>${originalPins[id].description}</p>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+        </div>
+        `;
+        originalPins[id].infoWindowContent = contentString;
+        infowindow.setContent(contentString)
+      });
+    }
     };
 
 
@@ -115,9 +136,15 @@
     };
 
     const savePin = function(id) {
-      markers[id].title = document.getElementById('update-pin-title').value;
-      markers[id].description = document.getElementById('update-pin-descprition').value;
-      markers[id].image_url = document.getElementById('update-pin-url').value;
+      if(markers[id]) {
+        markers[id].title = document.getElementById('update-pin-title').value;
+        markers[id].description = document.getElementById('update-pin-descprition').value;
+        markers[id].image_url = document.getElementById('update-pin-url').value;
+      } else {
+        originalPins[id].title = document.getElementById('update-pin-title').value;
+        originalPins[id].description = document.getElementById('update-pin-descprition').value;
+        originalPins[id].image_url = document.getElementById('update-pin-url').value;
+      }
       updatePinInfo(id);
       document.getElementById('update-pin-title').value = '';
       document.getElementById('update-pin-descprition').value = '';
@@ -176,18 +203,28 @@
 
 
     const deleteMarker = function(id) {
+      console.log(id);
+      if (markers[id]) {
+        console.log(markers[id]);
         const marker = markers[id]; // find the marker by given id
         marker.setMap(null);
-        delete markers[id];
+        delete originalPins[id];
+      } else {
+        console.log(originalPins[id]);
+        const marker = originalPins[id];
+        marker.setMap(null);
+        delete originalPins[id];
+      }
+
     }
 
 
     const addMarkers = function (newMarkers) {
 
         for (let marker in newMarkers) {
-
+          let id = uniqueId()
           const newMarker = new google.maps.Marker({
-          id: uniqueId(),
+          id: id,
           title: newMarkers[marker].title,
           description: newMarkers[marker].description,
           image_url:newMarkers[marker].image_url,
@@ -202,11 +239,10 @@
               <h1>${newMarkers[marker].title}</h1>
               <img src="${newMarkers[marker].image_url}">
               <p>${newMarkers[marker].description}</p>
-              <button onclick="deleteMarker(${this.id})" id="deletebtn${this.id}">Delete</button>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
             </div>`
           });
-          markers[newMarker.id] = newMarker;
-          console.log(newMarker);
+          originalPins[newMarker.id] = newMarker;
           newMarker.addListener("click", () => {
             if (infowindow){
               infowindow.close();
