@@ -12,7 +12,7 @@ $(() => {
 
   $.ajax({
     method: "GET",
-    url: `/users/${currentUser.id}/favourited_maps`
+    url: `/users/${currentUser.id}/favourite_maps`
   }).done((res) => {
     console.log(res);
     for (let map of res) {
