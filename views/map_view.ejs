@@ -26,6 +26,7 @@
       <form action="/favourite_maps" method="POST" class="map-info">
         <h2>Title: <%= mapData.title %></h2>
         <h4>Description: <%= mapData.description %></h4>
+        <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
         <div class="fav-save-buttons">
           <input hidden class="fav-map" id="user_id" type="number" name="user_id" value=<%= user.id %>>
           <input hidden class="fav-map" id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
@@ -285,7 +286,39 @@
 
     };
 
+    const parsePins = function(pins) {
+      newObj = {};
+      for(const pin in pins){
+        newObj[pin] = {
+          map_id: pins[pin].map_id,
+          title: pins[pin].title,
+          description: pins[pin].description,
+          image_url: pins[pin].image_url,
+          lat: pins[pin].position.lat(),
+          lng: pins[pin].position.lng(),
+          address: pins[pin].address,
+          user_id: currentUser.id,
+        }
+      }
+      return newObj;
+    };
 
+    const saveMap = function() {
+      $.ajax({
+        url: '/pins',
+        method: 'POST',
+        data: parsePins(markers),
+      }).done(response => {
+        console.log(response);
+        // update existing pins
+        $.ajax({
+          url:'/pins',
+          method: 'PUT',
+          data: parsePins(originalPins),
+        }).done(response => {
+          window.location.replace('users/1') //go home
+      });
+    }
 
 
 
