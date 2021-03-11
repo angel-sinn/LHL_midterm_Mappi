@@ -23,16 +23,17 @@
 
     <div class="map-info-side">
 
-      <form action="/maps/save" type="POST" class="map-info">
+      <form action="/favourite_maps" method="POST" class="map-info">
         <h2>Title: <%= mapData.title %></h2>
         <h4>Description: <%= mapData.description %></h4>
         <div class="fav-save-buttons">
-          <input class="fav-map" id="fav-map" type="submit" value="Fav Mappi">
-          <input class="save-map" id="save-map" type="submit" value="Save Mappi">
+          <input hidden class="fav-map" id="user_id" type="number" name="user_id" value=<%= user.id %>>
+          <input hidden class="fav-map" id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
+          <input class="fav-map" type="submit" value="Fav Mappi">
         </div>
         </form>
 
-      <form class="update-pin">
+      <div class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
         <div class="update-pin-title">
             <label for="update-pin-title">Pin Title</label><br>
@@ -48,9 +49,9 @@
             <label for="update-pin-url">Pin URL</label><br>
             <input type="text" id="update-pin-url" name="update-pin-url" required>
         </div>
-
-        <button class="update-pin-submit" id="update-pin-submit" value="Save Pin">Save Pin</button>
-      </form>
+        <div class="update-pin-submit" id="update-pin-button"></div>
+        <!-- <button class="update-pin-submit" id="update-pin-submit" value="Save Pin">Save Pin</button> -->
+      </div>
     </div>
 
 </div>
@@ -60,31 +61,67 @@
     // This id will have to be stored in the database
     let markerId = 0;
     const mapId = <%= mapData.id %>;
+    const currentUser = {id: <%= user.id %>};
+    let infowindow = null;
+    let selectedMarkerId = 0;
     let map;
-
     const uniqueId = function() {
         return ++markerId;
     }
 
-    // The markers object is exposed to the console
-    // In the browser type "markers" and hit enter to see all the markers
-    // To get a position of a single marker (ex. id=1) type the following
-    // markers[1].position.lat()
-    // or
-    // markers[1].position.lng()
     let markers = {};
+
+    function imageExists(url, callback) {
+      if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
+        var img = new Image();
+        img.onload = function() { callback(true); };
+        img.onerror = function() { callback(false); };
+        img.src = url;
+      } else {
+        callback(false);
+      };
+    }
+
+
+    const updatePinInfo = function(id) {
+      let imageTag ='';
+      imageExists(markers[id].image_url, (exists) => {
+        if  (exists) {
+          imageTag = `<img src="${markers[id].image_url}">`
+        } else {
+          imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
+        }
+        const contentString = `
+        <div class="infowindow" id="infowindow">
+            <h1>${markers[id].title}</h1>
+            ${imageTag}
+            <p>${markers[id].description}</p>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+        </div>
+        `;
+        markers[id].infoWindowContent = contentString;
+        infowindow.setContent(contentString)
+      })
+    };
+
 
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
-      let form = document.querySelector("form.update-pin");
+      let form = document.querySelector("div.update-pin");
       document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
+      document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
+    };
 
-      document.querySelector('#update-pin-submit').addEventListener('click',(value)=>{
-        console.log("current id", id);
-        console.log(markers[id]);
-      });
+    const savePin = function(id) {
+      markers[id].title = document.getElementById('update-pin-title').value;
+      markers[id].description = document.getElementById('update-pin-descprition').value;
+      markers[id].image_url = document.getElementById('update-pin-url').value;
+      updatePinInfo(id);
+      document.getElementById('update-pin-title').value = '';
+      document.getElementById('update-pin-descprition').value = '';
+      document.getElementById('update-pin-url').value = '';
     };
 
     const addlistener = function(id) {
@@ -101,36 +138,36 @@
           title:'',
           description:'',
           image_url:'',
+          user_id: currentUser.id,
           position: position,
           map: map,
           draggable: true,
           animation: google.maps.Animation.DROP,
           address: 'address',
-          map_id: mapId
+          map_id: mapId,
+          infoWindowContent:`
+            <div class="infowindow" id="infowindow">
+              <h1>Make a title :)</h1>
+              <img src="https://i.imgur.com/uVU4ffo.jpg">
+              <p>add a short description please!</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+            </div>`
       });
-
-
-      const contentString = `
-      <div class="infowindow">
-        <h1>My id is ${marker.id}</h1>
-        <img src="https://i.imgur.com/uVU4ffo.jpg">
-        <p>This is my long long long very very very very long description</p>
-        <button onclick="editMarker(${marker.id})" id="editbtn${marker.id}">Edit</button>
-        <button onclick="deleteMarker(${marker.id})" id="deletebtn${marker.id}">Delete</button>
-      </div>
-      `;
-
-      const infowindow = new google.maps.InfoWindow({
-        content: contentString,
+      infowindow = new google.maps.InfoWindow({
+        content: marker.infoWindowContent,
       });
-
-
       // add click listener
       marker.addListener("click", () => {
+        if (infowindow){
+          infowindow.close();
+        }
+      infowindow = new google.maps.InfoWindow({
+        content: marker.infoWindowContent,
+      });
+        selectedMarkerId = marker.id;
         infowindow.open(map, marker);
-      })
-
-
+        editMarker(selectedMarkerId);
+      });
       markers[id] = marker; // cache created marker to markers object with id as its key
       return marker;
     }
@@ -144,31 +181,42 @@
         delete markers[id];
     }
 
-    // ############################ this data will be filled out by ejs ###############################
-    // const mapData = {
-    //   id: //generate
-    //   title: //from form
-    //   category:
-    //   lat:,
-    //   lng:
-    //   zoom:
-    //   description:
-    // }
 
+    const addMarkers = function (newMarkers) {
 
-    const addMarkers = function (markers) {
-        for (let marker in markers) {
+        for (let marker in newMarkers) {
+
           const newMarker = new google.maps.Marker({
           id: uniqueId(),
-          title: markers[marker].title,
-          description: markers[marker].description,
-          image_url:'',
-          position: {lat: Number(markers[marker].lat), lng: Number(markers[marker].lng)},
+          title: newMarkers[marker].title,
+          description: newMarkers[marker].description,
+          image_url:newMarkers[marker].image_url,
+          position: {lat: Number(newMarkers[marker].lat), lng: Number(newMarkers[marker].lng)},
           map: map,
           draggable: true,
           animation: google.maps.Animation.DROP,
-          address: markers[marker].address,
-          map_id: mapId
+          address: newMarkers[marker].address,
+          map_id: mapId,
+          infoWindowContent:`
+            <div class="infowindow" id="infowindow">
+              <h1>${newMarkers[marker].title}</h1>
+              <img src="${newMarkers[marker].image_url}">
+              <p>${newMarkers[marker].description}</p>
+              <button onclick="deleteMarker(${this.id})" id="deletebtn${this.id}">Delete</button>
+            </div>`
+          });
+          markers[newMarker.id] = newMarker;
+          console.log(newMarker);
+          newMarker.addListener("click", () => {
+            if (infowindow){
+              infowindow.close();
+            }
+            infowindow = new google.maps.InfoWindow({
+              content: newMarker.infoWindowContent,
+            });
+            selectedMarkerId = newMarker.id;
+            infowindow.open(map, newMarker);
+            editMarker(selectedMarkerId);
           });
         }
       }

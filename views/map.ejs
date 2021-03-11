@@ -66,6 +66,7 @@
 
 
     let markers = {};
+
     function imageExists(url, callback) {
       if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
         var img = new Image();
@@ -75,11 +76,11 @@
       } else {
         callback(false);
       };
-    }
+    };
+
     const updatePinInfo = function(id) {
       let imageTag ='';
       imageExists(markers[id].image_url, (exists) => {
-        console.log("exist= ", exists);
         if  (exists) {
           imageTag = `<img src="${markers[id].image_url}">`
         } else {
