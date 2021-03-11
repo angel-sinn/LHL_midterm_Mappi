@@ -6,19 +6,20 @@ const router  = express.Router();
 // GETs below
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
-    let query = "SELECT * FROM favourite_maps;";
-    db.query(query)
-      .then(data => {
-        const favourite_maps = data.rows;
-        res.json({ favourite_maps });
-      })
+  router.post("/post/:userId/:mapId", (req, res) => {
+    let query = `
+    INSERT INTO favourite_maps (user_id, map_id)
+    VALUES ($1, $2);
+    `;
+    return db.query(query, [req[0], req[1]])
+      .then(data => console.log(data))
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
   });
+
   return router;
 };
 

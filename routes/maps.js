@@ -122,8 +122,7 @@ module.exports = (db) => {
           lat = ${req.body.lat},
           lng = ${req.body.lng},
           zoom = ${req.body.zoom}
-      WHERE id = $1
-      RETURNING *;
+      WHERE id = $1;
     `;
     console.log(query);
     return db.query(query, [req.params.id])
