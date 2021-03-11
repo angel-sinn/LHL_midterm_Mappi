@@ -5,6 +5,7 @@ $white: #FFF;
 $navblue: #88c7ec;
 $formblue: #cee3f2;
 $grey: #848C91;
+$darkgrey:  #5d5d6a;
 $black: #000;
 $red: #c71c22;
 
@@ -102,7 +103,7 @@ input.new-map-submit {
   height: 35px;
   width: 100px;
   padding: 5px;
-  background-color: $white;
+  background-color: $formblue;
   border: 1px solid $grey;
   border-radius: 5px;
   font-family: Varela Round, sans-serif;
@@ -113,8 +114,7 @@ input.new-map-submit {
 
 input.new-map-submit:hover {
   cursor: pointer;
-  // color: $navblue;
-  filter: brightness(90%);
+  background-color: $white;
 }
 
 // View mappi
@@ -177,7 +177,7 @@ div#map {
 
   button.deletebtn:hover {
     cursor: pointer;
-    filter: brightness(115%)
+    filter: brightness(120%)
   }
 }
 
@@ -205,13 +205,48 @@ div.map-info {
   margin-bottom: 30px;
 
   h2 {
-    color: $black;
+    color:$darkgrey;
   }
 
   h4 {
     font-size: 0.9rem;
     color: $grey;
   }
+}
+
+%update-buttons {
+  height: 35px;
+  width: 120px;
+  padding: 5px;
+  background-color: $formblue;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  color: $grey;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+}
+
+div.fav-save-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button.save-map {
+  @extend %update-buttons;
+}
+
+input.fav-map {
+  @extend %update-buttons;
+  margin-right: 10px;
+}
+
+button.save-map:hover,
+input.fav-map:hover {
+  cursor: pointer;
+  background-color: $white;
 }
 
 // Displays edit mappi form
@@ -234,32 +269,8 @@ div.update-pin {
 
   h2 {
     margin-bottom: 5px;
-    color: $black;
+    color: $darkgrey;
   }
-}
-
-%update-buttons {
-  height: 35px;
-  width: 120px;
-  padding: 5px;
-  background-color: $white;
-  border: 1px solid $grey;
-  border-radius: 5px;
-  font-family: Varela Round, sans-serif;
-  font-size: 1rem;
-  color: $grey;
-  justify-content: center;
-  align-items: center;
-  align-self: flex-end;
-}
-
-button.save-map {
-  @extend %update-buttons;
-}
-
-button.save-map:hover {
-  cursor: pointer;
-  filter: brightness(90%);
 }
 
 .update-pin-submit {
@@ -277,82 +288,40 @@ button#save-pin-local {
 
 button#save-pin-local:hover {
   cursor: pointer;
-  filter: brightness(90%);
+  background-color: $white;
 }
 
-// View mappi page
 
-div.map-info {
-  height: 200px;
-  background-color: $formblue;
-  color: $grey;
-  font-family: Varela Round, sans-serif;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 10px;
-  margin-bottom: 30px;
 
-  h2 {
-    color: $black;
-  }
+// // Displays edit mappi form
+// form.update-pin {
+//   height: 375px;
+//   background-color: $formblue;
+//   color: $grey;
+//   font-family: Varela Round, sans-serif;
+//   border-radius: 12px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   padding: 10px;
+//   display: none;
 
-  h4 {
-    font-size: 0.9rem;
-    color: $grey;
-  }
+//   label {
+//     font-family: Varela Round, sans-serif;
+//     font-size: 0.9rem;
+//   }
 
-  div.fav-save-buttons {
-    display: flex;
-    justify-content: flex-end;
-  }
+//   h2 {
+//     margin-bottom: 5px;
+//     color: $black;
+//   }
 
-  input.fav-map {
-    @extend %update-buttons;
-    margin-right: 10px;
-  }
+//   button.update-pin-submit {
+//     @extend %update-buttons;
 
-  input.fav-map:hover {
-    cursor: pointer;
-    filter: brightness(90%);
-  }
+//   }
 
-  button#save-map {
-    @extend %update-buttons;
-
-  }
-}
-
-// Displays edit mappi form
-form.update-pin {
-  height: 375px;
-  background-color: $formblue;
-  color: $grey;
-  font-family: Varela Round, sans-serif;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 10px;
-  display: none;
-
-  label {
-    font-family: Varela Round, sans-serif;
-    font-size: 0.9rem;
-  }
-
-  h2 {
-    margin-bottom: 5px;
-    color: $black;
-  }
-
-  button.update-pin-submit {
-    @extend %update-buttons;
-
-  }
-
-}
+// }
 
 // User profile box
 .profile {
@@ -448,7 +417,7 @@ html {
 
 .welcome-container {
   width: 100%;
-  height: 95vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
