@@ -495,11 +495,18 @@ section#view-mappi {
       border: dashed 2px $navblue;
       border-radius: 5px;
       text-align: center;
+      padding: 20px;
     }
 
     div:hover {
       border: solid 2px $grey;
       filter: brightness(110%);
+    }
+
+    .fas {
+      margin-right: 13px;
+      font-size: 1.2rem;
+      align-self: center;
     }
   }
 }
