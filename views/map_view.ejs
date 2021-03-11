@@ -308,16 +308,18 @@
         url: '/pins',
         method: 'POST',
         data: parsePins(markers),
-      }).done(response => {
-        console.log(response);
-        // update existing pins
-        $.ajax({
-          url:'/pins',
-          method: 'PUT',
-          data: parsePins(originalPins),
-        }).done(response => {
-          window.location.replace('users/1') //go home
-      });
+        })
+        .done(response => {
+          console.log(response);
+          // update existing pins
+          $.ajax({
+            url:'/pins',
+            method: 'PUT',
+            data: parsePins(originalPins),
+          }).done(response => {
+            window.location.replace('users/1'); //go home
+          });
+        });
     }
 
 
