@@ -30,23 +30,23 @@
     <h2>Mappi</h2>
     <div id="mappi-list" class="mappi-list">
       <% for (let map in mapData) { %>
-        <% if(mapData[map].category === 'bar') { %>
+        <% if(mapData[map].category === 'Bars') { %>
           <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-glass-martini-alt"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'cafe') { %>
+        <% } else if (mapData[map].category === 'Cafes') { %>
             <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-coffee"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'grocery') { %>
+        <% } else if (mapData[map].category === 'Groceries') { %>
             <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-shopping-cart"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'hospital') { %>
+        <% } else if (mapData[map].category === 'Hospitals') { %>
             <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-clinic-medical"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'hotel') { %>
+        <% } else if (mapData[map].category === 'Hotels') { %>
             <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-concierge-bell"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'park') { %>
+        <% } else if (mapData[map].category === 'Parks') { %>
           <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-tree"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'pharmacy') { %>
+        <% } else if (mapData[map].category === 'Pharmacies') { %>
           <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-prescription-bottle-alt"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'restaurant') { %>
+        <% } else if (mapData[map].category === 'Restaurants') { %>
           <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-utensils"></i><%= mapData[map].title %></div></a>
-        <% } else if (mapData[map].category === 'sightseeing') { %>
+        <% } else if (mapData[map].category === 'Sightseeing') { %>
             <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-camera"></i><%= mapData[map].title %></div></a>
         <% } %>
       <% } %>
