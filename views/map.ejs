@@ -57,6 +57,7 @@
     // This id will have to be stored in the database
     let infowindow = null;
     let markerId = 0;
+    let map;
     let selectedMarkerId = 0;
     const mapId = <%= mapData.id %>;
     const currentUser = {id: <%= user.id %>};
@@ -124,13 +125,34 @@
       }
       return newObj;
     };
+
+    const getMapData = (id) => {
+      const currentMapData = {
+        id: id,
+        lat: map.getCenter().lat(),
+        lng: map.getCenter().lng(),
+        zoom: map.getZoom()
+      };
+      console.log(currentMapData);
+      return currentMapData;
+    };
+
+
     const saveMap = function() {
       $.ajax({
         url: '/pins',
         method: 'POST',
         data: parsePins(markers),
       }).done(response => {
-        window.location.replace(response);
+        $.ajax({
+          url:`/maps/${mapId}`,
+          method: 'PUT',
+          data: getMapData(mapId)
+        }).done(res => {
+          console.log(res);
+          window.location.replace(response);
+        });
+
       });
     }
     const editMarker = function(id) {
@@ -198,12 +220,11 @@
 
     function initMap() {
       // The location of Uluru
-      const myLatlng = { lat: -25.363, lng: 131.044 };
-      const uluru = { lat: -25.344, lng: 131.036 }; // make api request to user current locaiton?
-      // The map, centered at Uluru
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
-        center: uluru,
+      const myLatlng = { lat: 27.376975341207057, lng: -5.813712148177341 };
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 2,
+        center: myLatlng,
       });
       // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
