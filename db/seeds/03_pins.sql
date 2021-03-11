@@ -16,7 +16,7 @@ INSERT INTO pins (map_id, user_id, title, description, image_url, lat, lng, addr
   (3, 2, 'Nose Hill Park', 'Tranquil, spacious park with abundant wildlife', 'https://i.redd.it/o4hj9azfud411.jpg', 51.110487, -114.108844, '5620 14 St NW, Calgary, AB T3K 2P6'),
   (3, 2, 'Bowness Park', 'Serene spot with a lagoon and winter ice skating', 'https://upload.wikimedia.org/wikipedia/commons/3/37/Bowness_Park_lagoon.jpg', 51.097463, -114.217076, '8900 48 Ave NW, Calgary, AB T3B 2B2'),
 -- Map 4 ~ Collaborated Map from other user
-  (4, 2, 'South Glenmore Park', 'Waterfront green space with biking and hiking', 'https://media.chatterblock.com/cache/4e/91/4e9161e01f730ff5dca466be2b77c570.jpg', 50.973261, -114.119102, '24 St SW, Calgary, AB T2V 3N8'),
-  (4, 2, 'Fish Creek Provincial Park', 'Expansive park','https://www.dalhousiecalgary.ca/wp-content/uploads/2020/07/fish-creek-park.jpg', 50.914949, -114.010757, 'Calgary, AB'),
-  (4, 2, 'Nose Hill Park', 'Tranquil, spacious park with abundant wildlife', 'https://i.redd.it/o4hj9azfud411.jpg', 51.110487, -114.108844, '5620 14 St NW, Calgary, AB T3K 2P6'),
-  (4, 1, 'Bowness Park', 'Serene spot with a lagoon and winter ice skating', 'https://upload.wikimedia.org/wikipedia/commons/3/37/Bowness_Park_lagoon.jpg', 51.097463, -114.217076, '8900 48 Ave NW, Calgary, AB T3B 2B2');
+  (4, 2, 'Bergeron Falls', 'Hidden falls are a satisfying reward after the approach', 'https://s2.wklcdn.com/image_11/340586/20764032/12995222Master.jpg', 55.204234, -120.976821, 'Tumbler Ridge, BC V0C 2W0'),
+  (4, 2, 'Mount Tantalus', 'Beautiful mountain, part of an amazing surrounding range','https://peakvisor.com/img/news/Tantalus-Range.jpg', 49.819521, -123.329358, 'Sunshine Coast B, BC V0N 1H0'),
+  (4, 2, 'Mackenzie', 'Quaint town with plenty nature to explore just outside', 'https://upload.wikimedia.org/wikipedia/commons/d/dc/MackenziefromMorfeeMountain.jpg', 55.354453, -123.087940, 'Mackenzie, BC'),
+  (4, 1, 'Clearwater', 'Municipality featuring the Clearwater River-Thompson River tributary', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/01/7d/95/6f/helmcken-falls.jpg?w=500&h=300&s=1', 51.652008, -120.037911, 'Clearwater, BC');
