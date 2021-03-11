@@ -466,6 +466,20 @@ html {
       font-family: Varela Round, sans-serif;
       font-size: 1.25rem;
       margin-left: 30px;
+      animation: type 7s steps(93);
+      animation-iteration-count: infinite;
+      overflow: hidden;
+      white-space: nowrap;
+
+      @keyframes type {
+        0% {
+          width: 0ch;
+        }
+
+        100% {
+          width: 93ch;
+        }
+      }
   }
 }
 
