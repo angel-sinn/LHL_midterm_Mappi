@@ -14,10 +14,17 @@ module.exports = (db) => {
   }
 
   router.get("/", (req, res) => {
-    const templateVars = {
-      user: userAlice
-    }
-    res.render("homepage", templateVars);
-});
-return router;
+
+    let query = `SELECT * FROM maps;`;
+    return db.query(query)
+    .then(response => {
+      const templateVars = {
+        user: userAlice,
+        mapData: response.rows
+      }
+      res.render("homepage", templateVars);
+    })
+  });
+  return router;
 };
+
