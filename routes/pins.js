@@ -7,6 +7,19 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
+
+  const insertDataQueryString = function(body) {
+    let temp_query = `
+      INSERT INTO pins (map_id, user_id, title, description, image_url, lat, lng, address)
+      VALUES
+      `;
+      for(let id in body){
+        temp_query += `(${parseInt(body[id].map_id)},${parseInt(body[id].user_id)},'${body[id].title}','${body[id].description}', '${body[id].image_url}', ${Number(body[id].lat)},  ${Number(body[id].lng)}, '${body[id].address}'), `;
+      }
+      queryStr = temp_query.slice(0,-2) + ' RETURNING *;'
+      return queryStr;
+  }
+
   // get pins for a map
   router.get("/:id", (req, res) => {
     let query = `
@@ -42,15 +55,8 @@ module.exports = (db) => {
   // create pins for a map
   router.post("/", (req,res)=>{
     // get all pins from saveMap in map.ejs
-    let temp_query = `
-    INSERT INTO pins (map_id, user_id, title, description, image_url, lat, lng, address)
-    VALUES
-    `;
 
-    for(let id in req.body){
-      temp_query += `(${parseInt(req.body[id].map_id)},${parseInt(req.body[id].user_id)},'${req.body[id].title}','${req.body[id].description}', '${req.body[id].image_url}', ${Number(req.body[id].lat)},  ${Number(req.body[id].lng)}, '${req.body[id].address}'), `;
-    }
-    query = temp_query.slice(0,-2) + ' RETURNING *;'
+    query = insertDataQueryString(req.body);
 
     db.query(query)
     .then((response) => {
@@ -62,6 +68,51 @@ module.exports = (db) => {
         .json({ error: err.message });
     });
   });
+
+  router.put("/", (req,res)=>{
+    // get all pins from saveMap in map.ejs
+
+    let query = `DELETE FROM pins WHERE map_id = $1;`;
+
+    db.query(query, [parseInt(req.body['1'].map_id)])
+    .then((response_delete) => {
+      query = insertDataQueryString(req.body);
+
+      db.query(query)
+      .then((response_insert) => {
+        map_id = parseInt(req.body['1'].map_id);
+        res.send(`/maps/${map_id}`);
+      }).catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    }).catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+  //   let temp_query = `
+  //   UPDATE pins (map_id, user_id, title, description, image_url, lat, lng, address)
+  //   SET
+  //   `;
+  //   for(let id in req.body){
+  //     temp_query += `(map_id = ${parseInt(req.body[id].map_id)}, user_id = ${parseInt(req.body[id].user_id)}, title = '${req.body[id].title}', description = '${req.body[id].description}', image_url = '${req.body[id].image_url}', lat = ${Number(req.body[id].lat)}, lng = ${Number(req.body[id].lng)}, address = '${req.body[id].address}'), `;
+  //   }
+  //   query = temp_query.slice(0,-2) + ' WHERE map_id = $1;'
+  //   db.query(query, )
+  //   .then((response) => {
+  //     map_id = response.rows[0].map_id;
+  //     res.send(`/maps/${map_id}`);
+  //   }).catch(err => {
+  //     res
+  //       .status(500)
+  //       .json({ error: err.message });
+  //   });
+  // });
+
+
 
   return router;
 };
