@@ -6,6 +6,7 @@ $navblue: #88c7ec;
 $formblue: #cee3f2;
 $grey: #848C91;
 $black: #000;
+$red: #c71c22;
 
 * {
   margin: 0;
@@ -141,7 +142,7 @@ div#map {
 .infowindow {
 
   height: 200px;
-  width: 160px;
+  width: 165px;
   word-wrap: break-word;
 
   h1 {
@@ -163,15 +164,20 @@ div#map {
     margin-bottom: 7px;
   }
 
-  button {
+  button.deletebtn {
     font-family: Varela Round, sans-serif;
     font-size: 0.8rem;
-    background-color: $white;
-    border: 1px solid $grey;
+    background-color: $red;
+    border: 1px solid $red;
     border-radius: 5px;
-    color: $grey;
+    color: $white;
     height: 1.5rem;
     margin-right: 5px;
+  }
+
+  button.deletebtn:hover {
+    cursor: pointer;
+    filter: brightness(115%)
   }
 }
 
@@ -198,8 +204,13 @@ div.map-info {
   padding: 10px;
   margin-bottom: 30px;
 
+  h2 {
+    color: $black;
+  }
+
   h4 {
     font-size: 0.9rem;
+    color: $grey;
   }
 }
 
@@ -223,6 +234,7 @@ div.update-pin {
 
   h2 {
     margin-bottom: 5px;
+    color: $black;
   }
 }
 
@@ -282,8 +294,13 @@ form.map-info {
   padding: 10px;
   margin-bottom: 30px;
 
+  h2 {
+    color: $black;
+  }
+
   h4 {
     font-size: 0.9rem;
+    color: $grey;
   }
 
   div.fav-save-buttons {
@@ -327,6 +344,7 @@ form.update-pin {
 
   h2 {
     margin-bottom: 5px;
+    color: $black;
   }
 
   button.update-pin-submit {
