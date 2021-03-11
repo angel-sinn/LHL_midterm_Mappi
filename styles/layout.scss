@@ -13,6 +13,7 @@ $black: #000;
 
 // Nav bar
 .navbar {
+
   background-color: $navblue;
   padding: 10px 20px;
   display: flex;
@@ -28,6 +29,10 @@ $black: #000;
     text-decoration: none;
   }
 
+  &-logo:hover {
+    color: $grey;
+  }
+
   &-options {
     font-family: Varela Round, sans-serif;
     text-decoration: none;
@@ -36,7 +41,12 @@ $black: #000;
     border-radius: 5px;
     padding: 8px;
     margin-left: 10px;
-    }
+  }
+
+  &-options:hover {
+    color: $grey;
+  }
+
 }
 
 // Create mappi
@@ -98,6 +108,12 @@ input.new-map-submit {
   font-size: 1rem;
   color: $grey;
   align-self: center;
+}
+
+input.new-map-submit:hover {
+  cursor: pointer;
+  // color: $navblue;
+  filter: brightness(90%);
 }
 
 // View mappi
@@ -229,6 +245,11 @@ button.save-map {
   @extend %update-buttons;
 }
 
+button.save-map:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
 .update-pin-submit {
   display: flex;
   flex-direction: column;
@@ -240,6 +261,11 @@ button#save-pin-local {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+button#save-pin-local:hover {
+  cursor: pointer;
+  filter: brightness(90%);
 }
 
 // View mappi page
@@ -268,6 +294,11 @@ form.map-info {
   input.fav-map {
     @extend %update-buttons;
     margin-right: 10px;
+  }
+
+  input.fav-map:hover {
+    cursor: pointer;
+    filter: brightness(90%);
   }
 
   button#save-map {
@@ -383,6 +414,12 @@ img.user-profile-picture {
     border-radius: 5px;
     text-align: center;
   }
+
+  div:hover {
+    border: solid 2px $grey;
+    filter: brightness(110%);
+  }
+
 }
 
 // Homepage
@@ -419,18 +456,7 @@ div.homepage-buttons {
   flex-direction: row;
 }
 
-.create-mappi-button {
-    font-family: Varela Round, sans-serif;
-    font-size: 1.25rem;
-    text-decoration: none;
-    border: 1px solid $grey;
-    border-radius: 5px;
-    padding: 10px;
-    color: $grey;
-    margin: 40px 20px 0 30px;
-}
-
-.view-mappi-button {
+%homepage-button-styling {
   font-family: Varela Round, sans-serif;
   font-size: 1.25rem;
   text-decoration: none;
@@ -438,7 +464,20 @@ div.homepage-buttons {
   border-radius: 5px;
   padding: 10px;
   color: $grey;
+}
+.create-mappi-button {
+  @extend %homepage-button-styling;
+  margin: 40px 20px 0 30px;
+}
+
+.view-mappi-button {
+  @extend %homepage-button-styling;
   margin-top: 40px;
+}
+
+.create-mappi-button:hover,
+.view-mappi-button:hover {
+  color: $navblue;
 }
 
 section#view-mappi {
@@ -479,6 +518,11 @@ section#view-mappi {
       border: dashed 2px $navblue;
       border-radius: 5px;
       text-align: center;
+    }
+
+    div:hover {
+      border: solid 2px $grey;
+      filter: brightness(110%);
     }
   }
 }
