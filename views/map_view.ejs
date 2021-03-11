@@ -28,7 +28,7 @@
         <h2><%= mapData.title %></h2>
         <h4><%= mapData.description %></h4>
         <div class="fav-save-buttons">
-          <input class="fav-map" type="submit" value="Fav Mappi">
+          <button class="fav-map" id="fav-map" onclick="favMap()">Fav Mappi</button>
           <button class="save-map" id="save-map" onclick="saveMap()">Save Mappi</button>
           <input hidden id="user_id" type="number" name="user_id" value=<%= user.id %>>
           <input hidden id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
@@ -298,9 +298,21 @@
           window.location.replace(`/users/${currentUser.id}`); //go home
         });
       });
-
-
     }
+
+    const favMap = function() {
+      $.ajax({
+        url: '/favourite_maps',
+        method: 'POST',
+        data: {
+          map_id: mapId,
+          user_id: currentUser.id
+        }
+      }).done(res => {
+        console.log('disable button');
+        $('#fav-map').prop('disabled', true);
+      });
+    };
 
 
 
