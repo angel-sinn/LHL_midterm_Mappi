@@ -22,13 +22,14 @@ module.exports = (db) => {
   });
 
   router.post("/", (req, res) => {
+
     let query = `
     INSERT INTO favourite_maps (user_id, map_id)
     VALUES ($1, $2);
     `;
     return db.query(query, [parseInt(req.body.user_id), parseInt(req.body.map_id)])
       .then(data => {
-        console.log(data)
+        res.sendStatus(200);
       })
       .catch(err => {
         res
