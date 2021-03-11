@@ -238,14 +238,19 @@ button.save-map {
   @extend %update-buttons;
 }
 
-input.fav-map {
+button.fav-map {
   @extend %update-buttons;
   margin-right: 10px;
 }
 
 button.save-map:hover,
-input.fav-map:hover {
+button.fav-map:hover {
   cursor: pointer;
+  background-color: $white;
+}
+
+button.fav-map:disabled {
+  cursor: auto;
   background-color: $white;
 }
 
@@ -291,37 +296,6 @@ button#save-pin-local:hover {
   background-color: $white;
 }
 
-
-
-// // Displays edit mappi form
-// form.update-pin {
-//   height: 375px;
-//   background-color: $formblue;
-//   color: $grey;
-//   font-family: Varela Round, sans-serif;
-//   border-radius: 12px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-around;
-//   padding: 10px;
-//   display: none;
-
-//   label {
-//     font-family: Varela Round, sans-serif;
-//     font-size: 0.9rem;
-//   }
-
-//   h2 {
-//     margin-bottom: 5px;
-//     color: $black;
-//   }
-
-//   button.update-pin-submit {
-//     @extend %update-buttons;
-
-//   }
-
-// }
 
 // User profile box
 .profile {
@@ -373,7 +347,6 @@ img.user-profile-picture {
 }
 
 // Favourite maps, my maps, contributed maps
-
 .user-favourite-maps, .user-my-maps, .user-contributed-maps {
   margin: 20px 0;
 }
@@ -410,7 +383,6 @@ img.user-profile-picture {
 }
 
 // Homepage
-
 html {
   scroll-behavior: smooth;
 }
@@ -435,7 +407,7 @@ html {
       font-family: Varela Round, sans-serif;
       font-size: 1.25rem;
       margin-left: 30px;
-      animation: type 7s steps(93);
+      animation: type 8s steps(93);
       animation-iteration-count: infinite;
       overflow: hidden;
       white-space: nowrap;
@@ -443,6 +415,10 @@ html {
       @keyframes type {
         0% {
           width: 0ch;
+        }
+
+        65% {
+          width: 93ch;
         }
 
         100% {
