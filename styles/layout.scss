@@ -369,6 +369,7 @@ img.user-profile-picture {
   a {
     text-decoration: none;
     color: $grey;
+    margin: 15px;
   }
 
   div {
@@ -381,7 +382,6 @@ img.user-profile-picture {
     border: dashed 2px $navblue;
     border-radius: 5px;
     text-align: center;
-    margin: 15px;
   }
 }
 
@@ -466,6 +466,7 @@ section#view-mappi {
     a {
       text-decoration: none;
       color: $grey;
+      margin: 20px;
     }
 
     div {
@@ -478,7 +479,6 @@ section#view-mappi {
       border: dashed 2px $navblue;
       border-radius: 5px;
       text-align: center;
-      margin: 20px;
     }
   }
 }
