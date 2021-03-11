@@ -56,7 +56,7 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     let query = `
-    SELECT id, title, description, lat, lng FROM maps WHERE id = $1
+    SELECT id, title, description, lat, lng, zoom FROM maps WHERE id = $1
     `;
     // console.log(query);
     return db.query(query, [req.params.id])
@@ -113,25 +113,22 @@ module.exports = (db) => {
   });
 
   // WIP ~ probably need to change lat, lng, zoom reqs
-  router.put('/:id/put', (req, res) => {
+  router.put('/:id', (req, res) => {
     let query =`
     UPDATE maps
-      SET title = ${req.body.title},
-          description = ${req.body.description},
-          category = ${req.body.category},
-          lat = ${req.body.lat},
-          lng = ${req.body.lng},
-          zoom = ${req.body.zoom}
+      SET lat = ${Number(req.body.lat)},
+          lng = ${Number(req.body.lng)},
+          zoom = ${Number(req.body.zoom)}
       WHERE id = $1
-      RETURNING *;
     `;
     console.log(query);
     return db.query(query, [req.params.id])
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => console.log(err.stack));
+    .then(response => {
+      res.send(response);
+    }).catch(err => console.log(err.stack));
   })
+
+
 
   router.delete('/:id/delete', (req, res) => {
     let query =`DELETE FROM maps WHERE id = $1`;
