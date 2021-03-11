@@ -6,6 +6,7 @@ $navblue: #88c7ec;
 $formblue: #cee3f2;
 $grey: #848C91;
 $black: #000;
+$red: #c71c22;
 
 * {
   margin: 0;
@@ -13,6 +14,7 @@ $black: #000;
 
 // Nav bar
 .navbar {
+
   background-color: $navblue;
   padding: 10px 20px;
   display: flex;
@@ -28,6 +30,10 @@ $black: #000;
     text-decoration: none;
   }
 
+  &-logo:hover {
+    color: $grey;
+  }
+
   &-options {
     font-family: Varela Round, sans-serif;
     text-decoration: none;
@@ -36,7 +42,12 @@ $black: #000;
     border-radius: 5px;
     padding: 8px;
     margin-left: 10px;
-    }
+  }
+
+  &-options:hover {
+    color: $grey;
+  }
+
 }
 
 // Create mappi
@@ -100,6 +111,12 @@ input.new-map-submit {
   align-self: center;
 }
 
+input.new-map-submit:hover {
+  cursor: pointer;
+  // color: $navblue;
+  filter: brightness(90%);
+}
+
 // View mappi
 .map-container {
   width: 100%;
@@ -125,7 +142,7 @@ div#map {
 .infowindow {
 
   height: 200px;
-  width: 160px;
+  width: 165px;
   word-wrap: break-word;
 
   h1 {
@@ -147,15 +164,20 @@ div#map {
     margin-bottom: 7px;
   }
 
-  button {
+  button.deletebtn {
     font-family: Varela Round, sans-serif;
     font-size: 0.8rem;
-    background-color: $white;
-    border: 1px solid $grey;
+    background-color: $red;
+    border: 1px solid $red;
     border-radius: 5px;
-    color: $grey;
+    color: $white;
     height: 1.5rem;
     margin-right: 5px;
+  }
+
+  button.deletebtn:hover {
+    cursor: pointer;
+    filter: brightness(115%)
   }
 }
 
@@ -182,8 +204,13 @@ div.map-info {
   padding: 10px;
   margin-bottom: 30px;
 
+  h2 {
+    color: $black;
+  }
+
   h4 {
     font-size: 0.9rem;
+    color: $grey;
   }
 }
 
@@ -207,6 +234,7 @@ div.update-pin {
 
   h2 {
     margin-bottom: 5px;
+    color: $black;
   }
 }
 
@@ -229,6 +257,11 @@ button.save-map {
   @extend %update-buttons;
 }
 
+button.save-map:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
 .update-pin-submit {
   display: flex;
   flex-direction: column;
@@ -242,9 +275,14 @@ button#save-pin-local {
   align-items: center;
 }
 
+button#save-pin-local:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
 // View mappi page
 
-form.map-info {
+div.map-info {
   height: 200px;
   background-color: $formblue;
   color: $grey;
@@ -256,8 +294,13 @@ form.map-info {
   padding: 10px;
   margin-bottom: 30px;
 
+  h2 {
+    color: $black;
+  }
+
   h4 {
     font-size: 0.9rem;
+    color: $grey;
   }
 
   div.fav-save-buttons {
@@ -268,6 +311,11 @@ form.map-info {
   input.fav-map {
     @extend %update-buttons;
     margin-right: 10px;
+  }
+
+  input.fav-map:hover {
+    cursor: pointer;
+    filter: brightness(90%);
   }
 
   button#save-map {
@@ -296,6 +344,7 @@ form.update-pin {
 
   h2 {
     margin-bottom: 5px;
+    color: $black;
   }
 
   button.update-pin-submit {
@@ -383,6 +432,12 @@ img.user-profile-picture {
     border-radius: 5px;
     text-align: center;
   }
+
+  div:hover {
+    border: solid 2px $grey;
+    filter: brightness(110%);
+  }
+
 }
 
 // Homepage
@@ -419,18 +474,7 @@ div.homepage-buttons {
   flex-direction: row;
 }
 
-.create-mappi-button {
-    font-family: Varela Round, sans-serif;
-    font-size: 1.25rem;
-    text-decoration: none;
-    border: 1px solid $grey;
-    border-radius: 5px;
-    padding: 10px;
-    color: $grey;
-    margin: 40px 20px 0 30px;
-}
-
-.view-mappi-button {
+%homepage-button-styling {
   font-family: Varela Round, sans-serif;
   font-size: 1.25rem;
   text-decoration: none;
@@ -438,7 +482,20 @@ div.homepage-buttons {
   border-radius: 5px;
   padding: 10px;
   color: $grey;
+}
+.create-mappi-button {
+  @extend %homepage-button-styling;
+  margin: 40px 20px 0 30px;
+}
+
+.view-mappi-button {
+  @extend %homepage-button-styling;
   margin-top: 40px;
+}
+
+.create-mappi-button:hover,
+.view-mappi-button:hover {
+  color: $navblue;
 }
 
 section#view-mappi {
@@ -479,6 +536,11 @@ section#view-mappi {
       border: dashed 2px $navblue;
       border-radius: 5px;
       text-align: center;
+    }
+
+    div:hover {
+      border: solid 2px $grey;
+      filter: brightness(110%);
     }
   }
 }

@@ -23,17 +23,18 @@
 
     <div class="map-info-side">
 
-      <form action="/favourite_maps" method="POST" class="map-info">
-        <h2>Title: <%= mapData.title %></h2>
-        <h4>Description: <%= mapData.description %></h4>
+      <!-- <div action="/favourite_maps" method="POST" class="map-info"> -->
+      <div class="map-info">
+        <h2><%= mapData.title %></h2>
+        <h4><%= mapData.description %></h4>
         <div class="fav-save-buttons">
-          <input class="fav-map" type="submit" value="Fav Mappi">
-          <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
+          <button class="fav-map" id="fav-map" onclick="favMap()">Fav Mappi</button>
+          <button class="save-map" id="save-map" onclick="saveMap()">Save Mappi</button>
           <input hidden id="user_id" type="number" name="user_id" value=<%= user.id %>>
           <input hidden id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
         </div>
-      </form>
-      <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
+      </div>
+
 
       <div class="update-pin">
         <h2 id="update-pin-id">Edit Mappi Pin</h2>
@@ -99,7 +100,7 @@
             <h1>${markers[id].title}</h1>
             ${imageTag}
             <p>${markers[id].description}</p>
-            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn"</button>
         </div>
         `;
         markers[id].infoWindowContent = contentString;
@@ -111,7 +112,7 @@
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
       let form = document.querySelector("div.update-pin");
-      document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
+      document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
@@ -138,9 +139,9 @@
       const id = uniqueId(); // get new id
       const marker = new google.maps.Marker({ // create a marker and set id
           id: id, // this should auto increment, but for local use we manually
-          title:'',
-          description:'',
-          image_url:'',
+          title:'No Title',
+          description:'No Description',
+          image_url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png',
           user_id: currentUser.id,
           position: position,
           map: map,
@@ -152,10 +153,13 @@
             <div class="infowindow" id="infowindow">
               <h1>Make a title :)</h1>
               <img src="https://i.imgur.com/uVU4ffo.jpg">
-              <p>add a short description please!</p>
-              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+              <p>Edit information in this window using the form on the right</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
             </div>`
       });
+      if (infowindow){
+          infowindow.close();
+        }
       infowindow = new google.maps.InfoWindow({
         content: marker.infoWindowContent,
       });
@@ -207,7 +211,7 @@
               <h1>${newMarkers[marker].title}</h1>
               <img src="${newMarkers[marker].image_url}">
               <p>${newMarkers[marker].description}</p>
-              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
             </div>`
           });
           markers[newMarker.id] = newMarker;
@@ -226,20 +230,19 @@
       }
     function initMap() {
       // The location of Uluru
-      const myLatlng = { lat: -25.363, lng: 131.044 };
 
       const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
 
       // The map, centered at Uluru
       map = new google.maps.Map(document.getElementById("map"), {
+<<<<<<< HEAD
         zoom: 12,
+=======
+        zoom: <%= mapData.zoom %>,
+>>>>>>> b19c305492bc14252eec7fb084373db590b16a91
         center: location,
       });
 
-      let infoWindow = new google.maps.InfoWindow({
-        content: "Click the map to get Lat/Lng!",
-        position: myLatlng,
-      });
       // // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
         const latLng = {
@@ -270,16 +273,50 @@
       return newObj;
     };
 
+
+    const getMapData = (id) => {
+      const currentMapData = {
+        id: id,
+        lat: map.getCenter().lat(),
+        lng: map.getCenter().lng(),
+        zoom: map.getZoom()
+      };
+      console.log(currentMapData);
+      return currentMapData;
+    };
+
     const saveMap = function() {
+      console.log('running put');
       $.ajax({
           url: '/pins',
           method: 'PUT',
           data: parsePins(markers),
-        })
-        .done(response => {
+      }).done(response => {
+        console.log(response);
+        $.ajax({
+          url:`/maps/${mapId}`,
+          method: 'PUT',
+          data: getMapData(mapId)
+        }).done(res => {
+          console.log(res);
           window.location.replace(`/users/${currentUser.id}`); //go home
         });
-      }
+      });
+    }
+
+    const favMap = function() {
+      $.ajax({
+        url: '/favourite_maps',
+        method: 'POST',
+        data: {
+          map_id: mapId,
+          user_id: currentUser.id
+        }
+      }).done(res => {
+        console.log('disable button');
+        $('#fav-map').prop('disabled', true);
+      });
+    };
 
 
 

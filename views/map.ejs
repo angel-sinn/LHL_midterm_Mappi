@@ -24,8 +24,8 @@
     <div class="map-info-side">
 
       <div class="map-info">
-        <h2>Title: <%= mapData.title %></h2>
-        <h4>Description: <%= mapData.description %></h4>
+        <h2><%= mapData.title %></h2>
+        <h4><%= mapData.description %></h4>
         <button class="save-map" id="save-map" type="submit" onclick="saveMap()">Save Mappi</button>
       </div>
 
@@ -57,6 +57,7 @@
     // This id will have to be stored in the database
     let infowindow = null;
     let markerId = 0;
+    let map;
     let selectedMarkerId = 0;
     const mapId = <%= mapData.id %>;
     const currentUser = {id: <%= user.id %>};
@@ -92,7 +93,7 @@
             <h1>${markers[id].title}</h1>
             ${imageTag}
             <p>${markers[id].description}</p>
-            <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
         </div>
         `;
         markers[id].infoWindowContent = contentString;
@@ -124,19 +125,40 @@
       }
       return newObj;
     };
+
+    const getMapData = (id) => {
+      const currentMapData = {
+        id: id,
+        lat: map.getCenter().lat(),
+        lng: map.getCenter().lng(),
+        zoom: map.getZoom()
+      };
+      console.log(currentMapData);
+      return currentMapData;
+    };
+
+
     const saveMap = function() {
       $.ajax({
         url: '/pins',
         method: 'POST',
         data: parsePins(markers),
       }).done(response => {
-        window.location.replace(response);
+        $.ajax({
+          url:`/maps/${mapId}`,
+          method: 'PUT',
+          data: getMapData(mapId)
+        }).done(res => {
+          console.log(res);
+          window.location.replace(response);
+        });
+
       });
     }
     const editMarker = function(id) {
       // console.log('Editing marker ', id);
       let form = document.querySelector("div.update-pin");
-      document.getElementById('update-pin-id').innerHTML = `Edit Mappi Pin id: ${id}` // change this to title
+      document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
@@ -151,9 +173,9 @@
       const id = uniqueId(); // get new id
       const marker = new google.maps.Marker({ // create a marker and set id
           id: id, // this should auto increment, but for local use we manually
-          title:'',
-          description:'',
-          image_url:'',
+          title:'No Title',
+          description:'No Description',
+          image_url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png',
           user_id: currentUser.id,
           position: position,
           map: map,
@@ -165,10 +187,13 @@
             <div class="infowindow" id="infowindow">
               <h1>Make a title :)</h1>
               <img src="https://i.imgur.com/uVU4ffo.jpg">
-              <p>add a short description please!</p>
-              <button onclick="deleteMarker(${id})" id="deletebtn${id}">Delete</button>
+              <p>Edit information in this window using the form on the right</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
             </div>`
       });
+      if (infowindow){
+          infowindow.close();
+        }
       infowindow = new google.maps.InfoWindow({
         content: marker.infoWindowContent,
       });
@@ -195,12 +220,11 @@
 
     function initMap() {
       // The location of Uluru
-      const myLatlng = { lat: -25.363, lng: 131.044 };
-      const uluru = { lat: -25.344, lng: 131.036 }; // make api request to user current locaiton?
-      // The map, centered at Uluru
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
-        center: uluru,
+      const myLatlng = { lat: 27.376975341207057, lng: -5.813712148177341 };
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 2,
+        center: myLatlng,
       });
       // Configure the click listener.
       map.addListener("click", (mapsMouseEvent) => {
