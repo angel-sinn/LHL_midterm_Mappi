@@ -46,21 +46,21 @@
 
 ## Final Product
 
-**:computer:  Mappi Homepage  :computer:**
+**Mappi Homepage**
 
 !["Home Page"](https://github.com/Isams01/mappi/blob/features/ejs_views/images/homepage.gif?raw=true)
 
 
-**:computer:  Creating Mappi  :computer:**
+**Creating Mappi**
 
 !["Create a map"](https://github.com/Isams01/mappi/blob/features/ejs_views/images/create_mappi.png?raw=true)
 
 
-**:computer:  Editing Mappi  :computer:**
+**Editing Mappi**
 
 !["Editing a map"](https://github.com/Isams01/mappi/blob/features/ejs_views/images/editing_map.png?raw=true)
 
 
-**:computer:  User Dashboard  :computer:**
+**User Dashboard**
 
 !["Dashboard"](https://github.com/Isams01/mappi/blob/features/ejs_views/images/dashboard.png?raw=true)
