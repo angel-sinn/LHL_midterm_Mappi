@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+</head>
+
+<body>
+  <%- include('partials/_header', {user: user}); %>
+  <div class="welcome-container">
+    <h1>Welcome to Mappi</h1>
+    <p>We like maps because they are cool, and we think you should like maps too because.......yeah</p>
+    <div class="homepage-buttons">
+        <a href="/maps/" class="create-mappi-button">Create Mappi</a>
+        <a href="#view-mappi" class="view-mappi-button">View Mappi</a>
+    </div>
+  </div>
+  <section id="view-mappi">
+    <h2>Mappi</h2>
+    <div id="mappi-list" class="mappi-list">
+      <% for (let map in mapData) { %>
+        <% if(mapData[map].category === 'Bars') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-glass-martini-alt"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Cafes') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-coffee"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Groceries') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-shopping-cart"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Hospitals') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-clinic-medical"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Hotels') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-concierge-bell"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Parks') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-tree"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Pharmacies') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-prescription-bottle-alt"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Restaurants') { %>
+          <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-utensils"></i><%= mapData[map].title %></div></a>
+        <% } else if (mapData[map].category === 'Sightseeing') { %>
+            <a href="/maps/<%= mapData[map].id %>"><div><i class="fas fa-camera"></i><%= mapData[map].title %></div></a>
+        <% } %>
+      <% } %>
+    </div>
+  </section>
+</body>
+
+</html>

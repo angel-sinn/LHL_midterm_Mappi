@@ -1,17 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<head>
+  <title>Create Mappi</title>
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+
+</head>
+
+<body>
+  <%- include('partials/_header', {user: user}); %>
+  <div class="create-map-container">
+    <form action="/maps/create" method="POST" class="create-new-map">
+      <h2>Create Mappi</h2>
+      <div class="new-map-title">
+        <label for="new-map-title">Map Title</label><br>
+        <input type="text" id="new-map-title" name="new-map-title" required>
+      </div>
+
+      <div class="new-map-description">
+        <label for="new-map-description">Map Description</label><br>
+        <textarea id="new-map-description" name="new-map-description" required></textarea>
+      </div>
+
+      <div class="new-map-category">
+        <label for="new-map-category" >Map Category</label><br>
+        <select id="new-map-category" name="new-map-category" required>
+          <option selected="true" disabled="disabled" value="">Choose Category</option>
+          <option value="bar">Bars</option>
+          <option value="cafe">Cafes</option>
+          <option value="grocery">Groceries</option>
+          <option value="hospital">Hospitals</option>
+          <option value="hotel">Hotels</option>
+          <option value="parks">Parks</option>
+          <option value="pharmacy">Pharmacies</option>
+          <option value="restaurant">Restaurants</option>
+          <option value="sightseeing">Sightseeing</option>
+        </select>
+      </div>
+
+      <input class="new-map-submit" type="submit" value="Create">
+    </form>
+  </div>
+</body>
+
 </html>

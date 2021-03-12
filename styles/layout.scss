@@ -1,9 +1,512 @@
 // See: https://sass-lang.com/
 
-body {
-  background-color: #EEE;
+// Colors
+$white: #FFF;
+$navblue: #88c7ec;
+$formblue: #cee3f2;
+$grey: #848C91;
+$darkgrey:  #5d5d6a;
+$black: #000;
+$red: #c71c22;
+
+* {
+  margin: 0;
+}
+
+// Nav bar
+.navbar {
+
+  background-color: $navblue;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  height: 70px;
+
+  &-logo {
+    font-family: Varela Round, sans-serif;
+    font-size: 2.25rem;
+    color: $white;
+    text-decoration: none;
+  }
+
+  &-logo:hover {
+    color: $grey;
+  }
+
+  &-options {
+    font-family: Varela Round, sans-serif;
+    text-decoration: none;
+    color: $white;
+    border: solid 1px $white;
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 10px;
+  }
+
+  &-options:hover {
+    color: $grey;
+  }
+
+}
+
+// Create mappi
+
+%textbox-format {
+  width: 100%;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.create-map-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+form.create-new-map {
+  height: 450px;
+  width: 30%;
+  margin: 40px;
+  padding: 25px;
+  border-radius: 12px;
+  font-family: Varela Round, sans-serif;
+  box-shadow: 0, 0, 1rem, rgb(0, 0, 0 /15%);
+  background-color: $formblue;
+  color: $grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#new-map-title {
+  @extend %textbox-format;
+  height: 2rem;
+}
+
+#new-map-description {
+  @extend %textbox-format;
+  height: 4rem;
+  word-wrap: break-word;
+}
+
+#new-map-category {
+  @extend %textbox-format;
+}
+
+input.new-map-submit {
+  height: 35px;
+  width: 100px;
+  padding: 5px;
+  background-color: $formblue;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  color: $grey;
+  align-self: center;
+}
+
+input.new-map-submit:hover {
+  cursor: pointer;
+  background-color: $white;
+}
+
+// View mappi
+.map-container {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+div#map {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  height: 80vh;
+  width: 65%;
+  border-radius: 12px;
+  background-color: $black;
+}
+
+// Infowindow
+
+.infowindow {
+
+  height: 200px;
+  width: 165px;
+  word-wrap: break-word;
 
   h1 {
-    color: #244751;
+    font-family: Varela Round, sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 7px;
+  }
+
+  p {
+    font-family: Varela Round, sans-serif;
+    font-size: 0.7rem;
+    margin-bottom: 7px;
+  }
+
+  img {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 7px;
+  }
+
+  button.deletebtn {
+    font-family: Varela Round, sans-serif;
+    font-size: 0.8rem;
+    background-color: $red;
+    border: 1px solid $red;
+    border-radius: 5px;
+    color: $white;
+    min-height: 1.5rem;
+    min-width: 4rem;
+  }
+
+  button.deletebtn:hover {
+    cursor: pointer;
+    filter: brightness(120%)
+  }
+}
+
+// Create mappi page
+.map-info-side {
+  height: 70vh;
+  width: 30%;
+  margin: 30px 30px 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// Displays mappi info
+div.map-info {
+  height: 200px;
+  background-color: $formblue;
+  color: $grey;
+  font-family: Varela Round, sans-serif;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px;
+  margin-bottom: 30px;
+
+  h2 {
+    color:$darkgrey;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+    color: $grey;
+  }
+}
+
+%update-buttons {
+  height: 35px;
+  width: 120px;
+  padding: 5px;
+  background-color: $formblue;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  font-family: Varela Round, sans-serif;
+  font-size: 1rem;
+  color: $grey;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+}
+
+div.fav-save-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button.save-map {
+  @extend %update-buttons;
+}
+
+button.fav-map {
+  @extend %update-buttons;
+  margin-right: 10px;
+}
+
+button.save-map:hover,
+button.fav-map:hover {
+  cursor: pointer;
+  background-color: $white;
+}
+
+button.fav-map:disabled {
+  cursor: auto;
+  background-color: $white;
+}
+
+// Displays edit mappi form
+div.update-pin {
+  height: 375px;
+  background-color: $formblue;
+  color: $grey;
+  font-family: Varela Round, sans-serif;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px;
+  display: none;
+
+  label {
+    font-family: Varela Round, sans-serif;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    margin-bottom: 5px;
+    color: $darkgrey;
+  }
+}
+
+.update-pin-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+button#save-pin-local {
+  @extend %update-buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button#save-pin-local:hover {
+  cursor: pointer;
+  background-color: $white;
+}
+
+
+// User profile box
+.profile {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.user-profile-box {
+  height: 275px;
+  width: 275px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 30px;
+}
+
+img.user-profile-picture {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
+
+.user-name {
+  font-family: Varela Round, sans-serif;
+  font-size: 1.6rem;
+  color: $grey;
+}
+
+// Map dashboard
+.user-maps {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 80%;
+  font-family: Varela Round, sans-serif;
+  padding: 0 30px;
+  margin-top: 30px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: $grey;
+    font-family: Varela Round, sans-serif;
+    font-size: 1.6rem;
+  }
+}
+
+// Favourite maps, my maps, contributed maps
+.user-favourite-maps, .user-my-maps, .user-contributed-maps {
+  margin: 20px 0;
+}
+
+.map-list {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: $grey;
+    margin: 15px;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5rem;
+    width: 225px;
+    word-wrap: break-word;
+    border: dashed 2px $navblue;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  div:hover {
+    border: solid 2px $grey;
+    filter: brightness(110%);
+  }
+
+}
+
+// Homepage
+html {
+  scroll-behavior: smooth;
+}
+
+.welcome-container {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  h1 {
+      font-family: Varela Round, sans-serif;
+      font-size: 2.75rem;
+      color: $grey;
+      margin-bottom: 20px;
+      margin-left: 30px;
+  }
+
+  p {
+      font-family: Varela Round, sans-serif;
+      font-size: 1.25rem;
+      margin-left: 30px;
+      animation: type 8s steps(93);
+      animation-iteration-count: infinite;
+      overflow: hidden;
+      white-space: nowrap;
+
+      @keyframes type {
+        0% {
+          width: 0ch;
+        }
+
+        65% {
+          width: 93ch;
+        }
+
+        100% {
+          width: 93ch;
+        }
+      }
+  }
+}
+
+div.homepage-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+%homepage-button-styling {
+  font-family: Varela Round, sans-serif;
+  font-size: 1.25rem;
+  text-decoration: none;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  padding: 10px;
+  color: $grey;
+}
+.create-mappi-button {
+  @extend %homepage-button-styling;
+  margin: 40px 20px 0 30px;
+}
+
+.view-mappi-button {
+  @extend %homepage-button-styling;
+  margin-top: 40px;
+}
+
+.create-mappi-button:hover,
+.view-mappi-button:hover {
+  color: $navblue;
+}
+
+section#view-mappi {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-family: Varela Round, san-serif;
+    font-size: 2.75rem;
+    margin: 30px 20px 0 20px;
+    color: $grey;
+  }
+
+  div.mappi-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    font-family: Varela Round, sans-serif;
+
+    a {
+      text-decoration: none;
+      color: $grey;
+      margin: 20px;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 3.5rem;
+      width: 250px;
+      word-wrap: break-word;
+      border: dashed 2px $navblue;
+      border-radius: 5px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    div:hover {
+      border: solid 2px $grey;
+      filter: brightness(110%);
+    }
+
+    .fas {
+      margin-right: 13px;
+      font-size: 1.2rem;
+      align-self: center;
+    }
   }
 }

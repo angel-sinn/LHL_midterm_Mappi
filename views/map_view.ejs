@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Mappi</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap" rel="stylesheet">
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+</head>
+
+<body>
+  <%- include('partials/_header', {user: user}); %>
+  <div class="map-container">
+    <div id="map"></div>
+
+    <div class="map-info-side">
+
+      <!-- <div action="/favourite_maps" method="POST" class="map-info"> -->
+      <div class="map-info">
+        <h2><%= mapData.title %></h2>
+        <h4><%= mapData.description %></h4>
+        <div class="fav-save-buttons">
+          <button class="fav-map" id="fav-map" onclick="favMap()">Fav Mappi</button>
+          <button class="save-map" id="save-map" onclick="saveMap()">Save Mappi</button>
+          <input hidden id="user_id" type="number" name="user_id" value=<%= user.id %>>
+          <input hidden id="map_id" type="number" name="map_id" value= <%= mapData.id %>>
+        </div>
+      </div>
+
+
+      <div class="update-pin">
+        <h2 id="update-pin-id">Edit Mappi Pin</h2>
+        <div class="update-pin-title">
+            <label for="update-pin-title">Pin Title</label><br>
+            <input type="text" id="update-pin-title" name="update-pin-title" required>
+        </div>
+
+        <div class="update-pin-description">
+            <label for="update-pin-description">Pin Description</label><br>
+            <textarea id="update-pin-descprition" name="update-pin-description" required></textarea>
+        </div>
+
+        <div class="update-pin-url">
+            <label for="update-pin-url">Pin URL</label><br>
+            <input type="text" id="update-pin-url" name="update-pin-url" required>
+        </div>
+        <div class="update-pin-submit" id="update-pin-button"></div>
+        <!-- <button class="update-pin-submit" id="update-pin-submit" value="Save Pin">Save Pin</button> -->
+      </div>
+    </div>
+
+</div>
+  </div>
+
+  <script>
+    // This id will have to be stored in the database
+    let markerId = 0;
+    const mapId = <%= mapData.id %>;
+    const currentUser = {id: <%= user.id %>};
+    let infowindow = null;
+    let selectedMarkerId = 0;
+    let map;
+    const uniqueId = function() {
+        return ++markerId;
+    }
+
+    let markers = {};
+
+    function imageExists(url, callback) {
+      if(url.match(/^http:\/\/.*/) || url.match(/^https:\/\/.*/)){
+        var img = new Image();
+        img.onload = function() { callback(true); };
+        img.onerror = function() { callback(false); };
+        img.src = url;
+      } else {
+        callback(false);
+      };
+    }
+
+
+    const updatePinInfo = function(id) {
+      let imageTag ='';
+        imageExists(markers[id].image_url, (exists) => {
+        if  (exists) {
+          imageTag = `<img src="${markers[id].image_url}">`
+        } else {
+          imageTag = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png">`;
+          markers[id].image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
+        }
+        const contentString = `
+        <div class="infowindow" id="infowindow">
+            <h1>${markers[id].title}</h1>
+            ${imageTag}
+            <p>${markers[id].description}</p>
+            <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
+        </div>
+        `;
+        markers[id].infoWindowContent = contentString;
+        infowindow.setContent(contentString)
+      });
+    };
+
+
+    const editMarker = function(id) {
+      // console.log('Editing marker ', id);
+      let form = document.querySelector("div.update-pin");
+      document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
+      form.style.display = 'flex';
+      document.querySelector("input#update-pin-title").focus();
+      document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
+    };
+
+    const savePin = function(id) {
+      markers[id].title = document.getElementById('update-pin-title').value;
+      markers[id].description = document.getElementById('update-pin-descprition').value;
+      markers[id].image_url = document.getElementById('update-pin-url').value;
+      updatePinInfo(id);
+      document.getElementById('update-pin-title').value = '';
+      document.getElementById('update-pin-descprition').value = '';
+      document.getElementById('update-pin-url').value = '';
+    };
+
+    const addlistener = function(id) {
+      console.log('adding listener to id', id);
+      document.getElementById(`deletebtn${id}`).addEventListener('click', ()=>{
+        console.log(id);
+      })
+    }
+
+    const createMarker = function(map, position) {
+      const id = uniqueId(); // get new id
+      const marker = new google.maps.Marker({ // create a marker and set id
+          id: id, // this should auto increment, but for local use we manually
+          title:'No Title',
+          description:'No Description',
+          image_url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png',
+          user_id: currentUser.id,
+          position: position,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: 'address',
+          map_id: mapId,
+          infoWindowContent:`
+            <div class="infowindow" id="infowindow">
+              <h1>Make a title :)</h1>
+              <img src="https://i.imgur.com/uVU4ffo.jpg">
+              <p>Edit information in this window using the form on the right</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
+            </div>`
+      });
+      if (infowindow){
+          infowindow.close();
+        }
+      infowindow = new google.maps.InfoWindow({
+        content: marker.infoWindowContent,
+      });
+      // add click listener
+      marker.addListener("click", () => {
+        if (infowindow){
+          infowindow.close();
+        }
+      infowindow = new google.maps.InfoWindow({
+        content: marker.infoWindowContent,
+      });
+        selectedMarkerId = marker.id;
+        infowindow.open(map, marker);
+        editMarker(selectedMarkerId);
+      });
+      markers[id] = marker; // cache created marker to markers object with id as its key
+      return marker;
+    }
+
+
+
+
+    const deleteMarker = function(id) {
+      console.log(id);
+      console.log(markers[id]);
+      const marker = markers[id]; // find the marker by given id
+      marker.setMap(null);
+      delete markers[id];
+    }
+
+
+    const addMarkers = function (newMarkers) {
+
+        for (let marker in newMarkers) {
+          let id = uniqueId()
+          const newMarker = new google.maps.Marker({
+          id: id,
+          title: newMarkers[marker].title,
+          description: newMarkers[marker].description,
+          image_url:newMarkers[marker].image_url,
+          position: {lat: Number(newMarkers[marker].lat), lng: Number(newMarkers[marker].lng)},
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          address: newMarkers[marker].address,
+          map_id: mapId,
+          infoWindowContent:`
+            <div class="infowindow" id="infowindow">
+              <h1>${newMarkers[marker].title}</h1>
+              <img src="${newMarkers[marker].image_url}">
+              <p>${newMarkers[marker].description}</p>
+              <button onclick="deleteMarker(${id})" id="deletebtn${id}" class="deletebtn">Delete</button>
+            </div>`
+          });
+          markers[newMarker.id] = newMarker;
+          newMarker.addListener("click", () => {
+            if (infowindow){
+              infowindow.close();
+            }
+            infowindow = new google.maps.InfoWindow({
+              content: newMarker.infoWindowContent,
+            });
+            selectedMarkerId = newMarker.id;
+            infowindow.open(map, newMarker);
+            editMarker(selectedMarkerId);
+          });
+        }
+      }
+    function initMap() {
+      // The location of Uluru
+
+      const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
+
+      // The map, centered at Uluru
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: <%= mapData.zoom %>,
+        center: location,
+      });
+
+      // // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        const latLng = {
+          lat: mapsMouseEvent.latLng.toJSON().lat,
+          lng: mapsMouseEvent.latLng.toJSON().lng
+        }
+
+        const marker = createMarker(map, latLng);
+      });
+
+
+    };
+
+    const parsePins = function(pins) {
+      newObj = {};
+      for(const pin in pins){
+        newObj[pin] = {
+          map_id: pins[pin].map_id,
+          title: pins[pin].title,
+          description: pins[pin].description,
+          image_url: pins[pin].image_url,
+          lat: pins[pin].position.lat(),
+          lng: pins[pin].position.lng(),
+          address: pins[pin].address,
+          user_id: currentUser.id,
+        }
+      }
+      return newObj;
+    };
+
+
+    const getMapData = (id) => {
+      const currentMapData = {
+        id: id,
+        lat: map.getCenter().lat(),
+        lng: map.getCenter().lng(),
+        zoom: map.getZoom()
+      };
+      console.log(currentMapData);
+      return currentMapData;
+    };
+
+    const saveMap = function() {
+      console.log('running put');
+      $.ajax({
+          url: '/pins',
+          method: 'PUT',
+          data: parsePins(markers),
+      }).done(response => {
+        console.log(response);
+        $.ajax({
+          url:`/maps/${mapId}`,
+          method: 'PUT',
+          data: getMapData(mapId)
+        }).done(res => {
+          console.log(res);
+          window.location.replace(`/users/${currentUser.id}`); //go home
+        });
+      });
+    }
+
+    const favMap = function() {
+      $.ajax({
+        url: '/favourite_maps',
+        method: 'POST',
+        data: {
+          map_id: mapId,
+          user_id: currentUser.id
+        }
+      }).done(res => {
+        console.log('disable button');
+        $('#fav-map').prop('disabled', true);
+      });
+    };
+
+
+
+  </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
+    type="text/javascript"></script>
+
+
+</body>
+
+</html>

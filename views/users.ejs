@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/getUserMaps.js"></script>
+  </head>
+
+  <body>
+    <%- include('partials/_header', {user: user}); %>
+    <div class="profile">
+      <div class="user-profile-box">
+        <img
+          src= "<%=user.image%>"
+          class="user-profile-picture"
+          alt="user-profile-picture"
+        />
+        <h2 class="user-name"><%=user.name%></h2>
+      </div>
+      <div class="user-maps">
+        <section class="user-my-maps">
+          <h2>My Mappi</h2>
+          <div id="my-maps" class="map-list">
+            <% for (let map in mapData) { %>
+           <a href="/maps/<%= mapData[map].id %>"><div><%= mapData[map].title %></div></a>
+            <% } %>
+            </div>
+        </section>
+        <section class="user-favourite-maps">
+          <h2>Favourited Mappi</h2>
+          <div id="favourite-maps" class="map-list">
+          </div>
+        </section>
+        <section class="user-contributed-maps">
+          <h2>Contributed Mappi</h2>
+          <div id="contributed-maps" class="map-list">
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const currentUser = {id: <%= user.id %>};
+  </script>
+
+</html>
