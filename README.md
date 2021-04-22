@@ -4,10 +4,10 @@ Mappi is a full-stack web application built with the EJS template engine, Expres
 
 ## Project Stack
 
-**Front-End**: HTML, SASS, JavaScript
+**Front-End**: HTML, SASS, JavaScript  
 **Back-End**: EJS, Express, Node  
-**Database**: PostgreSQL
-**API**: Google Maps JavaScript API
+**Database**: PostgreSQL  
+**API**: Google Maps JavaScript API  
 
 ## Project Features
 
