@@ -48,7 +48,7 @@ This project requires a Google Maps API key to use, please see: <https://develop
 - password: `labber`
 - database: `midterm`
 
-4. Install the dependencies with npm install
+4. Install the dependencies with `npm install`
 
 5. Fix to binaries for sass: `npm rebuild node-sass`
 
