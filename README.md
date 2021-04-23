@@ -2,12 +2,17 @@
 
 Mappi is a full-stack web application built with the EJS template engine, Express, Node and PostgreSQL. This app allows users to create, collaborate, and favourite community maps.
 
+## Contributors
+
+- <a href="https://github.com/angel-sinn" target="_blank">Angel Sinn</a>
+- <a href="https://github.com/Isams01" target="_blank">Isamu Ito</a>
+- <a href="https://github.com/JoshuaRully" target="_blank">Joshua Rully</a>
+
 ## Project Stack
 
 **Front-End**: HTML, SASS, JavaScript  
-**Back-End**: EJS, Express, Node  
-**Database**: PostgreSQL  
-**API**: Google Maps JavaScript API  
+**Back-End**: EJS, Express, Node, PostgreSQL  
+**API**: Google Maps JavaScript API
 
 ## Project Features
 
