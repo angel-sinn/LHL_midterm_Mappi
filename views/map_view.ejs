@@ -110,7 +110,6 @@
 
 
     const editMarker = function(id) {
-      // console.log('Editing marker ', id);
       let form = document.querySelector("div.update-pin");
       document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
       form.style.display = 'flex';
@@ -179,9 +178,6 @@
       return marker;
     }
 
-
-
-
     const deleteMarker = function(id) {
       console.log(id);
       console.log(markers[id]);
@@ -189,7 +185,6 @@
       marker.setMap(null);
       delete markers[id];
     }
-
 
     const addMarkers = function (newMarkers) {
 
@@ -229,11 +224,8 @@
         }
       }
     function initMap() {
-      // The location of Uluru
+      const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; //
 
-      const location = { lat: <%=mapData.lat%>, lng: <%=mapData.lng%> }; // make api request to user current locaiton?
-
-      // The map, centered at Uluru
       map = new google.maps.Map(document.getElementById("map"), {
         zoom: <%= mapData.zoom %>,
         center: location,
@@ -248,8 +240,6 @@
 
         const marker = createMarker(map, latLng);
       });
-
-
     };
 
     const parsePins = function(pins) {
@@ -268,7 +258,6 @@
       }
       return newObj;
     };
-
 
     const getMapData = (id) => {
       const currentMapData = {
@@ -313,8 +302,6 @@
         $('#fav-map').prop('disabled', true);
       });
     };
-
-
 
   </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap"
