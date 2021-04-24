@@ -30,7 +30,6 @@ module.exports = (db) => {
     SELECT * FROM pins
     WHERE map_id = $1
     ;`;
-    console.log(query);
     db.query(query, [req.params.id])
       .then((data) => {
         const pins = data.rows;
@@ -47,7 +46,6 @@ module.exports = (db) => {
     FROM pins
     WHERE map_id = $1;
     `;
-    console.log("received");
     return db.query(query, [req.params.id]).then((res) => {
       response.json(res.rows);
     });

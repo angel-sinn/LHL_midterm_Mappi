@@ -88,7 +88,6 @@ module.exports = (db) => {
     UNION
     SELECT title, lat, lng FROM pins WHERE map_id = $1;
     `;
-    console.log(query);
     return db
       .query(query, [req.params.id])
       .then((res) => {
@@ -105,7 +104,6 @@ module.exports = (db) => {
           zoom = ${Number(req.body.zoom)}
       WHERE id = $1
     `;
-    console.log(query);
     return db
       .query(query, [req.params.id])
       .then((response) => {
@@ -116,7 +114,6 @@ module.exports = (db) => {
 
   router.delete("/:id/delete", (req, res) => {
     let query = `DELETE FROM maps WHERE id = $1`;
-    console.log(query);
     return db
       .query(query, [req.params.id])
       .then((res) => {

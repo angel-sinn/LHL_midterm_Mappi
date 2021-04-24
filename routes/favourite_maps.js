@@ -7,7 +7,6 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log("inside get request");
     let query = "SELECT * FROM favourite_maps;";
     db.query(query)
       .then((data) => {

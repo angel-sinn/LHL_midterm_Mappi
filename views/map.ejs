@@ -131,7 +131,6 @@
         lng: map.getCenter().lng(),
         zoom: map.getZoom()
       };
-      console.log(currentMapData);
       return currentMapData;
     };
 
@@ -154,9 +153,8 @@
       });
     }
     const editMarker = function(id) {
-      // console.log('Editing marker ', id);
       let form = document.querySelector("div.update-pin");
-      document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
+      document.getElementById('update-pin-id').innerHTML = `Editing - ${markers[id].title}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;

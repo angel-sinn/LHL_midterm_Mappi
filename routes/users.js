@@ -38,7 +38,6 @@ module.exports = (db) => {
 
     let query = `SELECT * FROM maps WHERE user_id = $1;`;
     return db.query(query, [req.params.id]).then((response) => {
-      console.log(response.rows);
       const templateVars = {
         user: userAlice,
         mapData: response.rows,

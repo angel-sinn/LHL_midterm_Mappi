@@ -111,7 +111,7 @@
 
     const editMarker = function(id) {
       let form = document.querySelector("div.update-pin");
-      document.getElementById('update-pin-id').innerHTML = `Edit Pin ${id}` // change this to title
+      document.getElementById('update-pin-id').innerHTML = `Editing - ${markers[id].title}` // change this to title
       form.style.display = 'flex';
       document.querySelector("input#update-pin-title").focus();
       document.querySelector('#update-pin-button').innerHTML=`<button id="save-pin-local" onclick="savePin(${id})">Save Pin</button>`;
@@ -179,8 +179,6 @@
     }
 
     const deleteMarker = function(id) {
-      console.log(id);
-      console.log(markers[id]);
       const marker = markers[id]; // find the marker by given id
       marker.setMap(null);
       delete markers[id];
@@ -266,12 +264,10 @@
         lng: map.getCenter().lng(),
         zoom: map.getZoom()
       };
-      console.log(currentMapData);
       return currentMapData;
     };
 
     const saveMap = function() {
-      console.log('running put');
       $.ajax({
           url: '/pins',
           method: 'PUT',
@@ -298,7 +294,6 @@
           user_id: currentUser.id
         }
       }).done(res => {
-        console.log('disable button');
         $('#fav-map').prop('disabled', true);
       });
     };
